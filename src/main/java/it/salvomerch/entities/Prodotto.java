@@ -1,5 +1,7 @@
 package it.salvomerch.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -70,6 +72,7 @@ public class Prodotto {
         return Objects.hash(id, nome, prezzo, categoria);
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "prodotto")
     public Collection<Carrello> getCarrellosById() {
         return carrellosById;
@@ -79,6 +82,7 @@ public class Prodotto {
         this.carrellosById = carrellosById;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "prodotto")
     public Collection<OrdineProdotto> getOrdineProdottosById() {
         return ordineProdottosById;
@@ -88,6 +92,7 @@ public class Prodotto {
         this.ordineProdottosById = ordineProdottosById;
     }
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "categoria", referencedColumnName = "nome")
     public Categoria getCategoria() {
