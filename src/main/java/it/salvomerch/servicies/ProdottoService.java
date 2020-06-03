@@ -24,4 +24,11 @@ public class ProdottoService {
 
         return prodottoRepository.findAll();
     }
+
+    @Transactional(readOnly = false)
+    public void addProduct(Prodotto prodotto){
+        if(prodotto.getId()!= null && prodottoRepository.existsById(prodotto.getId()))
+            throw new IllegalArgumentException("Prodotto già esistente! ");
+        prodottoRepository.save(prodotto);
+    }
 }
