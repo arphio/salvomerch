@@ -18,6 +18,11 @@ public class ProdottoService {
     @Autowired
     private EntityManager em;
 
+    @Transactional(readOnly = true)
+    public Prodotto getProdotto(int id){
+        return prodottoRepository.findById(id);
+    }
+
 
     @Transactional(readOnly = true)
     public List<Prodotto> showAllProducts(){

@@ -1,0 +1,14 @@
+<h2>MIEI CLIENTI</h2>
+
+
+<ul class="clienti">
+  <li *ngFor="let cliente of clienti"
+  >
+  <a routerLink="/detail/{{cliente.id}}">
+    <span class="badge">{{cliente.nome}}</span> {{cliente.email}}
+    </a>
+  </li>
+</ul>
+
+
+<!--  <app-prodotto-detail [prodotto]="selectedProdotto"></app-prodotto-detail> --->

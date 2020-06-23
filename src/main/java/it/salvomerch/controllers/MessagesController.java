@@ -9,10 +9,6 @@ import java.util.List;
 @RestController
 public class MessagesController {
 
-    @GetMapping("/api/messages")
-    public List<String> getMessages(Principal principal) {
-        //TODO
-    }
 
 
 }

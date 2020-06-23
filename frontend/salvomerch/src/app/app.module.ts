@@ -9,6 +9,9 @@ import { ProdottoDetailComponent } from './prodotto-detail/prodotto-detail.compo
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthRoutingModule } from './auth-routing.module';
+import { MenuComponent } from './menu/menu.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,16 @@ import { HttpClientModule } from '@angular/common/http';
     ProdottiComponent,
     ProdottoDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    MenuComponent,
+    ClienteComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

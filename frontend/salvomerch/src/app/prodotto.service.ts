@@ -12,6 +12,7 @@ export class ProdottoService {
 
   private prodottoUrl : string;
 
+
   getProdotti() : Observable<Prodotto[]> {
     //this.messageService.add('ProdottoService: fetched products');
     return this.http.get<Prodotto[]>(this.prodottoUrl);
@@ -20,10 +21,10 @@ export class ProdottoService {
   getProdotto(id : number) : Observable<Prodotto>{
 
     //this.messageService.add('ProdottoService: fetched prodotto id = ${id}');
-    return of(PRODOTTI.find(prodotto => prodotto.id==id));
+    return this.http.get<Prodotto>(this.prodottoUrl+id);
   }
 
   constructor(/*private messageService : MessageService,*/ private http: HttpClient) {
-    this.prodottoUrl='http://localhost:8080/products';
+    this.prodottoUrl='http://localhost:8080/products/';
    }
 }
