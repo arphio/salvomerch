@@ -26,7 +26,7 @@ public class ClienteService {
 
     @Transactional(readOnly = false)
     public void addCliente(Cliente c){
-        if(clienteRepository.findByEmail(c.getEmail())!=null)
+        if(clienteRepository.existsById(c.getId()) || clienteRepository.findByEmail(c.getEmail())!=null)
             throw new IllegalArgumentException("cliente gia esistente!");
         clienteRepository.save(c);
     }

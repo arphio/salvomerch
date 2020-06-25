@@ -14,6 +14,10 @@ export class ClienteService {
     return this.http.get<Cliente[]>(this.clienteUrl);
   }
 
+  addCliente(newCliente : Cliente) {
+    return this.http.post<Cliente>(this.clienteUrl+"/add", newCliente);
+  }
+
   constructor(private http : HttpClient) {
     this.clienteUrl="http://localhost:8080/users";
    }

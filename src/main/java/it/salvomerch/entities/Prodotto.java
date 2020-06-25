@@ -11,9 +11,10 @@ public class Prodotto {
     private Integer id;
     private String nome;
     private Integer prezzo;
+    private Integer quantita;
     //private String categoria;
-    private Collection<Carrello> carrellosById;
-    private Collection<OrdineProdotto> ordineProdottosById;
+    private Collection<ProdottoInCarrello> prodottoInCarrello;
+    private Collection<OrdineProdotto> ordineProdotto;
     private Categoria categoria;
 
     @Id
@@ -46,6 +47,12 @@ public class Prodotto {
         this.prezzo = prezzo;
     }
 
+    @Basic
+    @Column(name = "quantita", nullable = false)
+    public Integer getQuantita(){ return  quantita;}
+
+    public void setQuantita(int q){ this.quantita=q;}
+
    /* @Basic
     @Column(name = "categoria", nullable = true, length = 20)
     public String getCategoria() {
@@ -73,23 +80,23 @@ public class Prodotto {
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "prodotto")
-    public Collection<Carrello> getCarrellosById() {
-        return carrellosById;
+    @OneToMany
+    public Collection<ProdottoInCarrello> getProdottoInCarrello() {
+        return prodottoInCarrello;
     }
 
-    public void setCarrellosById(Collection<Carrello> carrellosById) {
-        this.carrellosById = carrellosById;
+    public void setProdottoInCarrello(Collection<ProdottoInCarrello> prodottoInCarrelloById) {
+        this.prodottoInCarrello = prodottoInCarrelloById;
     }
 
     @JsonIgnore
     @OneToMany(mappedBy = "prodotto")
-    public Collection<OrdineProdotto> getOrdineProdottosById() {
-        return ordineProdottosById;
+    public Collection<OrdineProdotto> getOrdineProdotto() {
+        return ordineProdotto;
     }
 
-    public void setOrdineProdottosById(Collection<OrdineProdotto> ordineProdottosById) {
-        this.ordineProdottosById = ordineProdottosById;
+    public void setOrdineProdotto(Collection<OrdineProdotto> ordineProdottosById) {
+        this.ordineProdotto = ordineProdottosById;
     }
 
     @JsonIgnore

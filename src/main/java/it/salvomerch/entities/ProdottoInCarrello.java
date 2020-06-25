@@ -1,14 +1,14 @@
 package it.salvomerch.entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Carrello {
+@Table(name = "prodotto_in_carrello", schema = "salvomerch")
+public class ProdottoInCarrello {
     private Integer id;
-   // private Integer cliente;
-   // private Integer prodotto;
-    private Integer totale;
+    private Integer quantita;
     private Cliente cliente;
     private Prodotto prodotto;
 
@@ -22,53 +22,33 @@ public class Carrello {
         this.id = id;
     }
 
-   /* @Basic
-    @Column(name = "cliente", nullable = false)
-    public Integer getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Integer cliente) {
-        this.cliente = cliente;
-    }
-
     @Basic
-    @Column(name = "prodotto", nullable = true)
-    public Integer getProdotto() {
-        return prodotto;
+    @Column(name = "quantita", nullable = true, precision = 0)
+    public Integer getQuantita() {
+        return quantita;
     }
 
-    public void setProdotto(Integer prodotto) {
-        this.prodotto = prodotto;
-    }*/
-
-    @Basic
-    @Column(name = "totale", nullable = true, precision = 0)
-    public Integer getTotale() {
-        return totale;
-    }
-
-    public void setTotale(Integer totale) {
-        this.totale = totale;
+    public void setQuantita(Integer totale) {
+        this.quantita = totale;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Carrello carrello = (Carrello) o;
-        return Objects.equals(id, carrello.id) &&
+        ProdottoInCarrello prodottoInCarrello = (ProdottoInCarrello) o;
+        return Objects.equals(id, prodottoInCarrello.id) &&
               //  Objects.equals(cliente, carrello.cliente) &&
               //  Objects.equals(prodotto, carrello.prodotto) &&
-                Objects.equals(totale, carrello.totale);
+                Objects.equals(quantita, prodottoInCarrello.quantita);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cliente, prodotto, totale);
+        return Objects.hash(id, cliente, prodotto, quantita);
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cliente", referencedColumnName = "id", nullable=false)
     public Cliente getCliente() {
         return cliente;
@@ -80,11 +60,12 @@ public class Carrello {
 
     @ManyToOne
     @JoinColumn(name = "prodotto", referencedColumnName = "id", nullable=false)
-    public Prodotto getProdotto() {
+    public Prodotto getProdotti() {
         return prodotto;
     }
 
-    public void setProdotto(Prodotto prodottoByProdotto) {
-        this.prodotto = prodottoByProdotto;
+
+    public void setProdotti(Prodotto prodottiByProdotti) {
+        this.prodotto = prodottiByProdotti;
     }
 }

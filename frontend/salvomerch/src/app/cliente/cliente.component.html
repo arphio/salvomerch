@@ -1,14 +1,41 @@
 <h2>MIEI CLIENTI</h2>
 
+<a class="btn btn-primary mb-3" (click)="addCliente()">Add</a>
+<div class="container row">
+  <div   class="col-md-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th> E-mail</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let cliente of clienti" >
+        <td>{{cliente.id}}</td>
+        <td>{{cliente.nome}}</td>
+        <td>{{cliente.email}}</td>
+        <td><button type="button" class="btn btn-primary" >Show Details</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div   class="col-md-6">
+    <app-add-cliente *ngIf="action === 'add'"  [cliente]="selCliente"></app-add-cliente>
+  </div>
+</div>
 
-<ul class="clienti">
+
+<!---<ul class="clienti">
   <li *ngFor="let cliente of clienti"
   >
-  <a routerLink="/detail/{{cliente.id}}">
+  <a routerLink="/detail/cliente/{{cliente.id}}">
     <span class="badge">{{cliente.nome}}</span> {{cliente.email}}
     </a>
   </li>
-</ul>
+</ul>--->
 
 
 <!--  <app-prodotto-detail [prodotto]="selectedProdotto"></app-prodotto-detail> --->

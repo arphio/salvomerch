@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth-routing.module';
 import { MenuComponent } from './menu/menu.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { AddClienteComponent } from './add-cliente/add-cliente.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ClienteComponent } from './cliente/cliente.component';
     MessagesComponent,
     DashboardComponent,
     MenuComponent,
-    ClienteComponent
+    ClienteComponent,
+    AddClienteComponent
   ],
   imports: [
     BrowserModule,

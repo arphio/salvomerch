@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdottoService {
@@ -32,8 +33,22 @@ public class ProdottoService {
 
     @Transactional(readOnly = false)
     public void addProduct(Prodotto prodotto){
-        if(prodotto.getId()!= null && prodottoRepository.existsById(prodotto.getId()))
-            throw new IllegalArgumentException("Prodotto già esistente! ");
-        prodottoRepository.save(prodotto);
+        if(prodottoRepository.existsById(prodotto.getId())){
+            int id= prodotto.getId();
+            Prodotto p= em.find(Prodotto.class, id);
+            p.setQuantita(p.getQuantita()+prodotto.getQuantita());
+        }
+        else {
+            prodottoRepository.save(prodotto);
+            em.refresh(prodotto);
+        }
+        em.flush();
+    }
+
+    @Transactional(readOnly = true)
+    public int getQuantita(int id){
+        Prodotto p= prodottoRepository.findById(id);
+        if(p==null)return 0;
+        return p.getQuantita();
     }
 }

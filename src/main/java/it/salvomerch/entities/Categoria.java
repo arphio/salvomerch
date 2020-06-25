@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Categoria {
     private String nome;
     private String descrizione;
-    private Collection<Prodotto> prodottosByNome;
+    private Collection<Prodotto> prodotti;
 
     @Id
     @Column(name = "nome", nullable = false, length = 20)
@@ -45,11 +45,11 @@ public class Categoria {
     }
 
     @OneToMany(mappedBy = "categoria")
-    public Collection<Prodotto> getProdottosByNome() {
-        return prodottosByNome;
+    public Collection<Prodotto> getProdotti() {
+        return prodotti;
     }
 
-    public void setProdottosByNome(Collection<Prodotto> prodottosByNome) {
-        this.prodottosByNome = prodottosByNome;
+    public void setProdotti(Collection<Prodotto> prodottosByNome) {
+        this.prodotti = prodottosByNome;
     }
 }

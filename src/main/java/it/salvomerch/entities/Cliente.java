@@ -9,8 +9,8 @@ public class Cliente {
     private Integer id;
     private String nome;
     private String email;
-    private Carrello carrellosById;
-    private Collection<Ordine> ordinesById;
+    private Collection<ProdottoInCarrello> carrello;
+    private Collection<Ordine> ordini;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -57,21 +57,25 @@ public class Cliente {
         return Objects.hash(id, nome, email);
     }
 
-    @OneToOne(mappedBy = "cliente")
-    public Carrello getCarrellosById() {
-        return carrellosById;
+    @OneToMany(mappedBy = "cliente")
+    public Collection<ProdottoInCarrello> getCarrello() {
+        return carrello;
     }
 
-    public void setCarrellosById(Carrello carrellosById) {
-        this.carrellosById = carrellosById;
+    public void setCarrello(Collection<ProdottoInCarrello> carrellosById) {
+        this.carrello = carrellosById;
     }
 
     @OneToMany(mappedBy = "cliente")
-    public Collection<Ordine> getOrdinesById() {
-        return ordinesById;
+    public Collection<Ordine> getOrdini() {
+        return ordini;
     }
 
-    public void setOrdinesById(Collection<Ordine> ordinesById) {
-        this.ordinesById = ordinesById;
+    public void setOrdini(Collection<Ordine> ordinesById) {
+        this.ordini = ordinesById;
+    }
+
+    public String toString(){
+        return id+","+nome+","+email;
     }
 }
