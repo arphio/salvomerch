@@ -1,5 +1,6 @@
 package it.salvomerch.servicies;
 
+import it.salvomerch.entities.Categoria;
 import it.salvomerch.entities.Prodotto;
 import it.salvomerch.repositories.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,22 @@ public class ProdottoService {
 
     @Transactional(readOnly = false)
     public void addProduct(Prodotto prodotto){
-        if(prodottoRepository.existsById(prodotto.getId())){
-            int id= prodotto.getId();
-            Prodotto p= em.find(Prodotto.class, id);
-            p.setQuantita(p.getQuantita()+prodotto.getQuantita());
-        }
-        else {
-            prodottoRepository.save(prodotto);
-            em.refresh(prodotto);
-        }
+        if(prodottoRepository.existsById(prodotto.getId()))
+            throw new IllegalArgumentException(("Prodotto già esistente!"));
+        prodottoRepository.save(prodotto);
+    }
+
+    @Transactional(readOnly = false)
+    public void updateProduct(Prodotto prodotto){
+        if(!prodottoRepository.existsById(prodotto.getId()))
+            throw  new IllegalArgumentException("prodotto inesistente!");
+        Prodotto old=em.find(Prodotto.class, prodotto.getId());
+        Integer prezzo=prodotto.getPrezzo(); Integer quantita=prodotto.getQuantita();
+        String nome=prodotto.getNome();
+        Categoria categoria=prodotto.getCategoria();
+        if(prezzo!=null) old.setPrezzo(prezzo);
+        if(quantita!=null) old.setQuantita(quantita);
+        if(nome!=null) old.setNome(nome);
         em.flush();
     }
 

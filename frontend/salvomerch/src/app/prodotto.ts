@@ -1,8 +1,6 @@
-import {ProdottoInCarrello} from "./prodottoInCarrello";
-import {Ordineprodotto} from "./ordineprodotto";
 import {Categoria} from "./categoria";
 
-export interface Prodotto {
+export class Prodotto {
   id: number;
   nome: string;
   prezzo: number;

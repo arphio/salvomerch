@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Prodotto } from './prodotto';
 import { Observable, of } from 'rxjs';
-import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -13,17 +12,23 @@ export class ProdottoService {
 
 
   getProdotti() : Observable<Prodotto[]> {
-    //this.messageService.add('ProdottoService: fetched products');
     return this.http.get<Prodotto[]>(this.prodottoUrl);
   }
 
   getProdotto(id : number) : Observable<Prodotto>{
 
-    //this.messageService.add('ProdottoService: fetched prodotto id = ${id}');
     return this.http.get<Prodotto>(this.prodottoUrl+id);
   }
 
-  constructor(/*private messageService : MessageService,*/ private http: HttpClient) {
+  addProdotto(newProd : Prodotto) : Observable<Prodotto>{
+    return this.http.post<Prodotto>(this.prodottoUrl+"add", newProd);
+  }
+
+  updateProdotto(newProd : Prodotto) :Observable<Prodotto>{
+    return  this.http.post<Prodotto>(this.prodottoUrl+"update", newProd);
+  }
+
+  constructor(private http: HttpClient) {
     this.prodottoUrl='http://localhost:8080/products/';
    }
 }

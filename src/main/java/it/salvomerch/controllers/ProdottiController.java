@@ -21,6 +21,11 @@ public class ProdottiController {
         return prodottoService.showAllProducts();
     }
 
+    @PostMapping("/update")
+    public void  updateProduct(@RequestBody Prodotto prodotto){
+        prodottoService.updateProduct(prodotto);
+    }
+
     @PostMapping("/add")
     public void addProdotto(@RequestBody Prodotto prodotto){
         prodottoService.addProduct(prodotto);

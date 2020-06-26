@@ -13,6 +13,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { MenuComponent } from './menu/menu.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { AddClienteComponent } from './add-cliente/add-cliente.component';
+import { AddUpProdottoComponent } from './add-up-prodotto/add-up-prodotto.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AddClienteComponent } from './add-cliente/add-cliente.component';
     DashboardComponent,
     MenuComponent,
     ClienteComponent,
-    AddClienteComponent
+    AddClienteComponent,
+    AddUpProdottoComponent
   ],
   imports: [
     BrowserModule,

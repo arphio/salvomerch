@@ -1,6 +1,35 @@
 <h2>MIEI PRODOTTI</h2>
 
 
+<a class="btn btn-primary mb-3" (click)="addUpProdotto()">Add/Update</a>
+<div class="container row">
+  <div   class="col-md-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Prezzo</th>
+        <th>Quantità</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let prodotto of prodotti" >
+        <td>{{prodotto.id}}</td>
+        <td>{{prodotto.nome}}</td>
+        <td>{{prodotto.prezzo}}</td>
+        <td>{{prodotto.quantita}}</td>
+        <td><button type="button" class="btn btn-primary" >Show Details</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div   class="col-md-6">
+    <app-add-up-prodotto *ngIf="action === 'add-up'"  [prodotto]="selectedProdotto"></app-add-up-prodotto>
+  </div>
+</div>
+
+<!---
 <ul class="prodotti">
   <li *ngFor="let prodotto of prodotti"
   >
@@ -9,6 +38,6 @@
     </a>
   </li>
 </ul>
-
+--->
 
 <app-prodotto-detail [prodotto]="selectedProdotto"></app-prodotto-detail>
