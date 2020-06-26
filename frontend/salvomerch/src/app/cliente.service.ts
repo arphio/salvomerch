@@ -15,10 +15,14 @@ export class ClienteService {
   }
 
   addCliente(newCliente : Cliente) {
-    return this.http.post<Cliente>(this.clienteUrl+"/add", newCliente);
+    return this.http.post<Cliente>(this.clienteUrl+"add", newCliente);
+  }
+
+  deleteCliente(id : number ){
+    return this.http.delete<Cliente>(this.clienteUrl+id);
   }
 
   constructor(private http : HttpClient) {
-    this.clienteUrl="http://localhost:8080/users";
+    this.clienteUrl="http://localhost:8080/users/";
    }
 }

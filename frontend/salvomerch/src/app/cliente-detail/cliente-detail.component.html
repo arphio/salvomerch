@@ -1,0 +1,21 @@
+<div class="clienteDetails">
+  <h2>Cliente details</h2>
+
+  <table>
+    <tr>
+      <td>User Id</td>
+      <td>{{cliente.id}}</td>
+    </tr>
+    <tr>
+      <td>User Name</td>
+      <td>{{cliente.nome}}</td>
+    </tr>
+    <tr>
+      <td>User e-mail</td>
+      <td>{{cliente.email}}</td>
+    </tr>
+
+  </table>
+  <br>
+  <a class="btn btn-small btn-danger" (click)="deleteCliente()"> delete</a>
+</div>

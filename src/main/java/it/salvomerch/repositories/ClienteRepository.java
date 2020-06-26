@@ -12,5 +12,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
     Cliente findById(int id);
     Cliente findByEmail(String email);
+    void deleteById(int id);
 
 }

@@ -24,6 +24,17 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Cliente getById(int id){
+        return  clienteRepository.findById(id);
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteClientebyId(int id){
+        clienteRepository.deleteById(id);
+        clienteRepository.flush();
+    }
+
     @Transactional(readOnly = false)
     public void addCliente(Cliente c){
         if(clienteRepository.existsById(c.getId()) || clienteRepository.findByEmail(c.getEmail())!=null)

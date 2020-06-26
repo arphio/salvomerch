@@ -25,4 +25,11 @@ public class ClientiController {
         System.out.println(c);
         clienteService.addCliente(c);
     }
+
+    @DeleteMapping(path = "/{id}")
+    public Cliente deleteCliente(@PathVariable("id") int id){
+        Cliente c= clienteService.getById(id);
+        clienteService.deleteClientebyId(id);
+        return c;
+    }
 }

@@ -22,17 +22,26 @@ export class ClienteComponent implements OnInit {
 
   }
 
-  getAction() : void {
+  refresh() : void {
+    this.getClienti();
     this.activetedRoute.queryParams.subscribe(
       (params) => {
         this.action=params ['action'];
+
+        const selectedClienteId= params ['id'];
+        if(selectedClienteId){
+          this.selCliente=this.clienti.find(cliente => cliente.id === +selectedClienteId);
+        }
       }
     );
   }
 
+  viewCliente(id : number) : void {
+    this.router.navigate([], {queryParams : {id, action: 'view'}});
+  }
+
   ngOnInit(): void {
-    this.getClienti();
-    this.getAction();
+    this.refresh();
 
   }
 

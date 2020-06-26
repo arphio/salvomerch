@@ -14,6 +14,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { AddClienteComponent } from './add-cliente/add-cliente.component';
 import { AddUpProdottoComponent } from './add-up-prodotto/add-up-prodotto.component';
+import { ClienteDetailComponent } from './cliente-detail/cliente-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AddUpProdottoComponent } from './add-up-prodotto/add-up-prodotto.compon
     MenuComponent,
     ClienteComponent,
     AddClienteComponent,
-    AddUpProdottoComponent
+    AddUpProdottoComponent,
+    ClienteDetailComponent
   ],
   imports: [
     BrowserModule,

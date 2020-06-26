@@ -17,13 +17,14 @@
         <td>{{cliente.id}}</td>
         <td>{{cliente.nome}}</td>
         <td>{{cliente.email}}</td>
-        <td><button type="button" class="btn btn-primary" >Show Details</button></td>
+        <td><button type="button" class="btn btn-primary" (click)="viewCliente(cliente.id)" >Show Details</button></td>
       </tr>
       </tbody>
     </table>
   </div>
   <div   class="col-md-6">
-    <app-add-cliente *ngIf="action === 'add'"  [cliente]="selCliente"></app-add-cliente>
+    <app-add-cliente *ngIf="action === 'add'"  [cliente]="selCliente" (clienteAddedEvent)="refresh()"></app-add-cliente>
+    <app-cliente-detail *ngIf="action === 'view'" [cliente]="selCliente" (clienteDeletedEvent)="refresh()"></app-cliente-detail>
   </div>
 </div>
 
