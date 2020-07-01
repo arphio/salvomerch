@@ -21,6 +21,11 @@ public class ProdottiController {
         return prodottoService.showAllProducts();
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteProduct(@PathVariable("id") int id){
+        this.prodottoService.deleteProduct(id);
+    }
+
     @PostMapping("/update")
     public void  updateProduct(@RequestBody Prodotto prodotto){
         prodottoService.updateProduct(prodotto);
@@ -31,7 +36,7 @@ public class ProdottiController {
         prodottoService.addProduct(prodotto);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public Prodotto getProdotto(@PathVariable("id") int id){
         return prodottoService.getProdotto(id);
     }

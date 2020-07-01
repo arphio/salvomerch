@@ -2,6 +2,7 @@
 
 
 <a class="btn btn-primary mb-3" (click)="addUpProdotto()">Add/Update</a>
+<a class="btn btn-primary mb-3" (click)="deleteProdotto()">Delete</a>
 <div class="container row">
   <div   class="col-md-6">
     <table class="table">
@@ -25,7 +26,7 @@
     </table>
   </div>
   <div   class="col-md-6">
-    <app-add-up-prodotto *ngIf="action === 'add-up'"  [prodotto]="selectedProdotto"></app-add-up-prodotto>
+    <app-add-up-prodotto *ngIf="action === 'add-up'"  [prodotto]="selectedProdotto" (prodottoAddedEvent)="refresh()"></app-add-up-prodotto>
   </div>
 </div>
 

@@ -18,13 +18,14 @@ export class ClienteDetailComponent implements OnInit {
 
   constructor(private service : ClienteService, private router : Router) { }
 
-  deleteCliente() : void {
+  deleteCliente() {
     this.service.deleteCliente(this.cliente.id).subscribe(
       (cliente) => {
         this.clienteDeletedEvent.emit();
-        this.router.navigate([])
+        this.router.navigate([]);
       }
     );
+
   }
 
   ngOnInit(): void {

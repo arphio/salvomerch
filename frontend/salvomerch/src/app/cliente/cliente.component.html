@@ -2,7 +2,7 @@
 
 <a class="btn btn-primary mb-3" (click)="addCliente()">Add</a>
 <div class="container row">
-  <div   class="col-md-6">
+  <div  class="col-md-6">
     <table class="table">
       <thead>
       <tr>
@@ -14,7 +14,6 @@
       </thead>
       <tbody>
       <tr *ngFor="let cliente of clienti" >
-        <td>{{cliente.id}}</td>
         <td>{{cliente.nome}}</td>
         <td>{{cliente.email}}</td>
         <td><button type="button" class="btn btn-primary" (click)="viewCliente(cliente.id)" >Show Details</button></td>

@@ -36,7 +36,7 @@ export class ClienteComponent implements OnInit {
     );
   }
 
-  viewCliente(id : number) : void {
+  viewCliente(id) : void {
     this.router.navigate([], {queryParams : {id, action: 'view'}});
   }
 

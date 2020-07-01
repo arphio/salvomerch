@@ -11,6 +11,10 @@ export class ProdottoService {
   private prodottoUrl : string;
 
 
+  deleteProdotto(id)  {
+    return this.http.delete<Prodotto>(this.prodottoUrl+id);
+  }
+
   getProdotti() : Observable<Prodotto[]> {
     return this.http.get<Prodotto[]>(this.prodottoUrl);
   }

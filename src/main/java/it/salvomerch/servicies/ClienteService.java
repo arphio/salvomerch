@@ -31,13 +31,15 @@ public class ClienteService {
 
     @Transactional(readOnly = false)
     public void deleteClientebyId(int id){
+        if(!clienteRepository.existsById(id)) return;
         clienteRepository.deleteById(id);
+        System.out.println("deleted cliente "+id);
         clienteRepository.flush();
     }
 
     @Transactional(readOnly = false)
     public void addCliente(Cliente c){
-        if(clienteRepository.existsById(c.getId()) || clienteRepository.findByEmail(c.getEmail())!=null)
+        if(clienteRepository.existsByEmail(c.getEmail()))
             throw new IllegalArgumentException("cliente gia esistente!");
         clienteRepository.save(c);
     }

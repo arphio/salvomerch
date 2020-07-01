@@ -18,7 +18,7 @@ export class ClienteService {
     return this.http.post<Cliente>(this.clienteUrl+"add", newCliente);
   }
 
-  deleteCliente(id : number ){
+  deleteCliente(id){
     return this.http.delete<Cliente>(this.clienteUrl+id);
   }
 

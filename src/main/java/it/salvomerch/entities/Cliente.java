@@ -13,6 +13,7 @@ public class Cliente {
     private Collection<Ordine> ordini;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;

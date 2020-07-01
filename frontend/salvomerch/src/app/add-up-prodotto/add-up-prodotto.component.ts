@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProdottoService} from "../prodotto.service";
 import {Router} from "@angular/router";
 import {Prodotto} from "../prodotto";
@@ -13,6 +13,9 @@ export class AddUpProdottoComponent implements OnInit {
   @Input()
   prodotto : Prodotto;
 
+  @Output()
+  prodottoAddedEvent = new EventEmitter();
+
   constructor(private prodottoService : ProdottoService, private router : Router) { }
 
   ngOnInit(): void {
@@ -20,13 +23,18 @@ export class AddUpProdottoComponent implements OnInit {
 
   addProdotto() : void {
     this.prodottoService.addProdotto(this.prodotto).subscribe(
-      (prodotto) => this.router.navigate([])
+      (prodotto) => {
+        this.prodottoAddedEvent.emit();
+        this.router.navigate([]);
+      }
     );
   }
 
   updateProdotto() : void {
     this.prodottoService.updateProdotto(this.prodotto).subscribe(
-      (prodotto) => this.router.navigate([])
+      (prodotto) =>{
+        this.prodottoAddedEvent.emit()
+        this.router.navigate([])}
     );
   }
 

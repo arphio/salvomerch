@@ -33,6 +33,13 @@ public class ProdottoService {
     }
 
     @Transactional(readOnly = false)
+    public void deleteProduct(int id){
+        if(!prodottoRepository.existsById(id))return;
+        prodottoRepository.deleteById(id);
+        prodottoRepository.flush();
+    }
+
+    @Transactional(readOnly = false)
     public void addProduct(Prodotto prodotto){
         if(prodottoRepository.existsById(prodotto.getId()))
             throw new IllegalArgumentException(("Prodotto già esistente!"));

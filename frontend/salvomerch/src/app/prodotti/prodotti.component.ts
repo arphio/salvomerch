@@ -40,10 +40,31 @@ export class ProdottiComponent implements OnInit {
     this.selectedProdotto=prodotto;
   }
 
+  deleteProdotto(){
+    this.prodottoService.deleteProdotto(this.selectedProdotto.id).subscribe(
+      prodotto => this.router.navigate([])
+    );
+    this.refresh();
+  }
+
+  refresh() : void{
+    this.getProdotti();
+    this.activatedRoute.queryParams.subscribe(
+      (params) => {
+        this.action=params ['action'];
+
+        const selectedProdottoId= params ['id'];
+        if(selectedProdottoId){
+          this.selectedProdotto=this.prodotti.find(prodotto => prodotto.id === +selectedProdottoId);
+        }
+      }
+    );
+
+  }
+
 
   ngOnInit(): void {
-    this.getProdotti();
-    this.getAction();
+    this.refresh();
   }
 
 }
