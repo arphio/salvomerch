@@ -12,5 +12,7 @@ import java.util.List;
 public interface ProdottoInCarrelloRepository extends JpaRepository<ProdottoInCarrello, Integer> {
 
     List<ProdottoInCarrello> findByCliente(Cliente c);
+    List<ProdottoInCarrello> findByCliente_Id(int id);
+    List<ProdottoInCarrello> findByCliente_Email(String email);
     ProdottoInCarrello findById(int id);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Optional;
@@ -65,5 +66,20 @@ public class ProdottoService {
         Prodotto p= prodottoRepository.findById(id);
         if(p==null)return 0;
         return p.getQuantita();
+    }
+
+    @Transactional(readOnly = false)
+    public void buyProduct(int id, int quantita){
+        if(!prodottoRepository.existsById(id))
+            throw new IllegalArgumentException("prodotto inesistente!");
+        Prodotto p= em.find(Prodotto.class, id);
+        int inQuant= p.getQuantita();
+        if(inQuant<quantita)
+            throw new IllegalArgumentException("Quantita non disponibile!");
+        em.lock(p, LockModeType.OPTIMISTIC);
+        p.setQuantita(inQuant-quantita);
+        em.flush();
+        em.lock(p, LockModeType.NONE);
+
     }
 }

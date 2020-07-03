@@ -8,9 +8,9 @@ import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { AuthInterceptor } from './shared/okta/auth.interceptor';
 
 const oktaConfig = {
-  issuer: 'https://studenti-unicalalfredo.okta.com/oauth2/default',
+  issuer: 'https://dev-839375.okta.com/oauth2/default',
   redirectUri: window.location.origin + '/callback',
-  clientId: '0oago3oc36YfSnYK24x6',
+  clientId: '0oaiz3cgkzeQR8nU64x6',
   scopes: ['openid', 'profile']
 };
 

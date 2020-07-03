@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ProdottoService} from "../prodotto.service";
+import {ProdottoService} from "../../prodotto.service";
 import {Router} from "@angular/router";
-import {Prodotto} from "../prodotto";
+import {Prodotto} from "../../prodotto";
 
 @Component({
   selector: 'app-add-up-prodotto',

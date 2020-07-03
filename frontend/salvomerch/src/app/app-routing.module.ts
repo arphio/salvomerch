@@ -1,21 +1,30 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProdottiComponent } from './prodotti/prodotti.component';
+import { ProdottiComponent } from './admin/prodotti/prodotti.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProdottoDetailComponent } from './prodotto-detail/prodotto-detail.component';
-import { ClienteComponent } from './cliente/cliente.component';
-
+import { ProdottoDetailComponent } from './admin/prodotto-detail/prodotto-detail.component';
+import { ClienteComponent } from './admin/cliente/cliente.component';
+import { OktaCallbackComponent, OktaAuthGuard } from '@okta/okta-angular';
 
 const routes: Routes = [
-  {path: 'prodotti', component: ProdottiComponent},
+  {path: 'admin/prodotti', canActivate:[OktaAuthGuard], component: ProdottiComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'detail/:id', component: ProdottoDetailComponent},
-  {path: 'clienti', component : ClienteComponent}
+  {path: 'admin/detail/:id', canActivate :[OktaAuthGuard], component: ProdottoDetailComponent},
+  {path: 'admin/clienti', canActivate :[ OktaAuthGuard ], component : ClienteComponent},
+  {path: 'implicit/callback', component: OktaCallbackComponent },
 ];
+
+// Require authentication on every route
+routes.forEach(route => {
+  route.canActivate = route.canActivate || [];
+  route.canActivate.push(OktaAuthGuard);
+});
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

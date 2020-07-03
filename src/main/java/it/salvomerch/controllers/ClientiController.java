@@ -3,6 +3,7 @@ package it.salvomerch.controllers;
 import it.salvomerch.entities.Cliente;
 import it.salvomerch.servicies.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
 
 public class ClientiController {
 
@@ -20,7 +21,7 @@ public class ClientiController {
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping()
+    @GetMapping
     public List<Cliente> allCliente(){ return clienteService.showAllCliente();}
 
 
@@ -29,6 +30,14 @@ public class ClientiController {
         System.out.println(c);
         clienteService.addCliente(c);
     }
+
+   /* @PostMapping("/reg")
+    public void addClienteAuth(@AuthenticationPrincipal OidcUser user){
+        Cliente c= new Cliente();
+        c.setEmail(user.getEmail());
+        c.setNome(user.getFullName());
+        clienteService.addCliente(c);
+    } FIX THIS */
 
     @PostMapping("/upload")
     public void uploadImage(@RequestParam("imageFile")MultipartFile file) throws IOException {

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Prodotto } from '../prodotto';
+import { Prodotto } from '../../prodotto';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ProdottoService } from '../prodotto.service';
+import { ProdottoService } from '../../prodotto.service';
 
 @Component({
   selector: 'app-prodotto-detail',

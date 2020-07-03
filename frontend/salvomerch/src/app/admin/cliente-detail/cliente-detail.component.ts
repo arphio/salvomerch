@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Cliente} from "../cliente";
-import {ClienteService} from "../cliente.service";
+import {Cliente} from "../../cliente";
+import {ClienteService} from "../../cliente.service";
 import {Router} from "@angular/router";
 
 @Component({
