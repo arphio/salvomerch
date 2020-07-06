@@ -1,4 +1,10 @@
-<h1>{{title}}</h1>
+<mat-toolbar color="primary">
+  <span>Welcome to {{title}}!</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-raised-button color="accent" *ngIf="isAuthenticated"
+          (click)="oktaAuth.logout()" [routerLink]="['/home']">Logout
+  </button>
+</mat-toolbar>
 <app-menu></app-menu>
 <router-outlet></router-outlet>
 <app-messages></app-messages>

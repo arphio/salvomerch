@@ -6,10 +6,12 @@ import { HomeComponent } from './home/home.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { AuthInterceptor } from './shared/okta/auth.interceptor';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatCardModule} from "@angular/material/card";
 
 const oktaConfig = {
   issuer: 'https://dev-839375.okta.com/oauth2/default',
-  redirectUri: window.location.origin + '/callback',
+  redirectUri: window.location.origin + '/implicit/callback',
   clientId: '0oaiz3cgkzeQR8nU64x6',
   scopes: ['openid', 'profile']
 };
@@ -21,7 +23,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'callback',
+    path: 'implicit/callback',
     component: OktaCallbackComponent
   }
 ];
@@ -34,7 +36,9 @@ const routes: Routes = [
     CommonModule,
     HttpClientModule,
     OktaAuthModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    MatToolbarModule,
+    MatCardModule
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: oktaConfig },
