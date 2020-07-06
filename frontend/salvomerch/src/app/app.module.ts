@@ -16,6 +16,9 @@ import { AddClienteComponent } from './admin/add-cliente/add-cliente.component';
 import { AddUpProdottoComponent } from './admin/add-up-prodotto/add-up-prodotto.component';
 import { ClienteDetailComponent } from './admin/cliente-detail/cliente-detail.component';
 import { OktaAuthModule} from "@okta/okta-angular";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import { HTTP_INTERCEPTORS} from '@angular/common/http';
+import { AuthInterceptor } from './shared/okta/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,11 +42,12 @@ import { OktaAuthModule} from "@okta/okta-angular";
     OktaAuthModule.initAuth({
       issuer: 'https://dev-839375.okta.com/oauth2/default',
       redirectUri: 'http://localhost:4200/implicit/callback',
-      clientId: '0oaiz3cgkzeQR8nU64x6',
-      pkce : true
-    })
+      clientId: '0oaiz3cgkzeQR8nU64x6'
+    }),
+    MatToolbarModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

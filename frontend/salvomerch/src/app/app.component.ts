@@ -16,10 +16,12 @@ export class AppComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.oktaAuth.isAuthenticated().then((auth) => {
-      this.isAuthenticated = auth;
-    });
+  async ngOnInit() {
+    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    // Subscribe to authentication state changes
+    this.oktaAuth.$authenticationState.subscribe(
+      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+    );
   }
 
   login() {

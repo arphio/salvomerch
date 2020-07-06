@@ -14,9 +14,9 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-    // Only add an access token to whitelisted origins
-    const allowedOrigins = ['http://localhost'];
-    if (allowedOrigins.some(url => request.urlWithParams.includes(url))) {
+    // Only add to known domains since we don't want to send our tokens to just anyone.
+    // Also, Giphy's API fails when the request includes a token.
+    if (request.urlWithParams.indexOf('localhost') > -1) {
       const accessToken = await this.oktaAuth.getAccessToken();
       request = request.clone({
         setHeaders: {

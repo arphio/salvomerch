@@ -12,8 +12,7 @@ import {MatCardModule} from "@angular/material/card";
 const oktaConfig = {
   issuer: 'https://dev-839375.okta.com/oauth2/default',
   redirectUri: window.location.origin + '/implicit/callback',
-  clientId: '0oaiz3cgkzeQR8nU64x6',
-  scopes: ['openid', 'profile']
+  clientId: '0oaiz3cgkzeQR8nU64x6'
 };
 
 const routes: Routes = [
