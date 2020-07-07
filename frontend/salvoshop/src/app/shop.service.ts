@@ -15,6 +15,6 @@ export class ShopService {
   }
 
   constructor(private http : HttpClient) {
-    this.shopUrl="http://localhost:8080/shop"
+    this.shopUrl='http://localhost:8080/shop';
   }
 }
