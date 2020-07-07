@@ -4,6 +4,8 @@ package it.salvomerch.servicies;
 import it.salvomerch.entities.Cliente;
 import it.salvomerch.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,16 @@ public class ClienteService {
     public void addCliente(Cliente c){
         if(clienteRepository.existsByEmail(c.getEmail()))
             throw new IllegalArgumentException("cliente gia esistente!");
+        clienteRepository.save(c);
+    }
+
+    @Transactional(readOnly = false)
+    public void accounting(@AuthenticationPrincipal OidcUser user){
+        String email=user.getEmail();
+        if(clienteRepository.existsByEmail(email)) return;
+        Cliente c= new Cliente();
+        c.setNome(user.getFullName());
+        c.setEmail(user.getEmail());
         clienteRepository.save(c);
     }
 }

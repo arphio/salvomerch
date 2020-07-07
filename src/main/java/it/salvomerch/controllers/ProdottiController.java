@@ -3,18 +3,21 @@ package it.salvomerch.controllers;
 import it.salvomerch.entities.Prodotto;
 import it.salvomerch.servicies.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@PreAuthorize("hasAuthority('admins')")
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
 
 public class ProdottiController {
 
     @Autowired
     private ProdottoService prodottoService;
+
 
     @GetMapping
     public List<Prodotto> allProducts(){

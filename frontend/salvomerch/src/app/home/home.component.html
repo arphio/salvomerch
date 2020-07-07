@@ -3,8 +3,5 @@
     <button mat-raised-button color="accent" *ngIf="!isAuthenticated"
             (click)="oktaAuth.loginRedirect()">Login
     </button>
-    <button mat-raised-button color="accent" *ngIf="isAuthenticated"
-            [routerLink]="['/admin/prodotti']">Prodotti
-    </button>
   </mat-card-content>
 </mat-card>

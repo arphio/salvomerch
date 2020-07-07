@@ -1,0 +1,17 @@
+<h1>SHOP</h1>
+<div class="container row">
+<div class="col-md-4" *ngFor="let prodotto of prodotti;let i=index">
+  <div class="card card-block">
+    <div class="book-desc-container row">
+      <div>
+        <p style="margin-left: 60px"><strong>{{prodotto.nome}}: ${{prodotto.prezzo}}</strong></p>
+      </div>
+      <div class="offset-md-4 col-md-4">
+        <button class="btn btn-primary btn-sm"> <!---(click)="addToCart(prodotto.id)"--->
+        Add To Cart</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>

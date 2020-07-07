@@ -9,14 +9,16 @@ import { OktaAuthService } from '@okta/okta-angular';
 export class HomeComponent implements OnInit {
   isAuthenticated: boolean;
 
-  constructor( public oktaAuth: OktaAuthService) {
+  constructor(public oktaAuth: OktaAuthService) {
   }
 
   async ngOnInit() {
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    const user = await this.oktaAuth.getUser();
     // Subscribe to authentication state changes
     this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+      (isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated
     );
   }
 }
+

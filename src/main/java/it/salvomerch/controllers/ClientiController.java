@@ -4,6 +4,9 @@ import it.salvomerch.entities.Cliente;
 import it.salvomerch.servicies.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,22 +25,21 @@ public class ClientiController {
     private ClienteService clienteService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('admins')")
     public List<Cliente> allCliente(){ return clienteService.showAllCliente();}
 
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('admins')")
     public void addCliente(@RequestBody Cliente c){
         System.out.println(c);
         clienteService.addCliente(c);
     }
 
-   /* @PostMapping("/reg")
+ /*  @PostMapping("/reg")
     public void addClienteAuth(@AuthenticationPrincipal OidcUser user){
-        Cliente c= new Cliente();
-        c.setEmail(user.getEmail());
-        c.setNome(user.getFullName());
-        clienteService.addCliente(c);
-    } FIX THIS */
+        clienteService.accounting(user);
+    }*/
 
     @PostMapping("/upload")
     public void uploadImage(@RequestParam("imageFile")MultipartFile file) throws IOException {
@@ -45,6 +47,7 @@ public class ClientiController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('admins')")
     public void deleteCliente(@PathVariable("id") int id){
         clienteService.deleteClientebyId(id);
     }
