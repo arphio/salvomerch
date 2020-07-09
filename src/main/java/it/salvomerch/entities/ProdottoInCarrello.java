@@ -60,12 +60,12 @@ public class ProdottoInCarrello {
 
     @ManyToOne
     @JoinColumn(name = "prodotto", referencedColumnName = "id", nullable=false)
-    public Prodotto getProdotti() {
+    public Prodotto getProdotto() {
         return prodotto;
     }
 
 
-    public void setProdotti(Prodotto prodottiByProdotti) {
+    public void setProdotto(Prodotto prodottiByProdotti) {
         this.prodotto = prodottiByProdotti;
     }
 }

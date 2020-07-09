@@ -1,20 +1,24 @@
 package it.salvomerch.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 public class Ordine {
     private Integer id;
-    private Timestamp dataacquisto;
-    private Integer totale;
+    private Date dataacquisto;
+    private Double totale;
    // private Integer cliente;
     private Cliente cliente;
     private Collection<OrdineProdotto> ordineProdottosById;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -25,22 +29,24 @@ public class Ordine {
     }
 
     @Basic
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dataacquisto", nullable = true)
-    public Timestamp getDataacquisto() {
+    public Date getDataacquisto() {
         return dataacquisto;
     }
 
-    public void setDataacquisto(Timestamp dataacquisto) {
+    public void setDataacquisto(Date dataacquisto) {
         this.dataacquisto = dataacquisto;
     }
 
     @Basic
     @Column(name = "totale", nullable = true, precision = 0)
-    public Integer getTotale() {
+    public Double getTotale() {
         return totale;
     }
 
-    public void setTotale(Integer totale) {
+    public void setTotale(Double totale) {
         this.totale = totale;
     }
 
@@ -87,5 +93,14 @@ public class Ordine {
 
     public void setOrdineProdottosById(Collection<OrdineProdotto> ordineProdottosById) {
         this.ordineProdottosById = ordineProdottosById;
+    }
+
+    public void addProdotto(Prodotto p, int quantita){
+        OrdineProdotto op= new OrdineProdotto();
+        op.setOrdine(this);
+        op.setProdotto(p);
+        op.setQuantita(quantita);
+        this.ordineProdottosById.add(op);
+        this.totale+=p.getPrezzo()*quantita;
     }
 }

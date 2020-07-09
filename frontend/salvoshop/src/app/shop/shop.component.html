@@ -7,7 +7,7 @@
         <p style="margin-left: 60px"><strong>{{prodotto.nome}}: €{{prodotto.prezzo}}</strong></p>
       </div>
       <div class="offset-md-4 col-md-4">
-        <button class="btn btn-primary btn-sm"> <!---(click)="addToCart(prodotto.id)"--->
+        <button class="btn btn-primary btn-sm" (click)="addToCart(prodotto)">
         Add To Cart</button>
       </div>
     </div>

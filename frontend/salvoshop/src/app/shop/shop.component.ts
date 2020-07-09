@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Prodotto} from "../prodotto";
-import {Router} from "@angular/router";
-import {ShopService} from "../shop.service";
+import { Prodotto} from "../models/prodotto";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ShopService} from "../servicies/shop.service";
+import {Categoria} from "../models/categoria";
+import {Pagina} from "../models/pagina";
 
 @Component({
   selector: 'app-shop',
@@ -12,10 +14,14 @@ export class ShopComponent implements OnInit {
 
   prodotti : Prodotto[];
   prodottoRecieved: Prodotto[];
+  page : number;
+  pages : number[];
+  categorie : Categoria[];
+  selVal : string;
+  category : string;
+  pagina : Pagina;
 
-  prodottoCart:any;
-
-  constructor(private router: Router, private shopService : ShopService) {
+  constructor(private router: Router, private shopService : ShopService, private route : ActivatedRoute) {
   }
 
 
@@ -23,22 +29,30 @@ export class ShopComponent implements OnInit {
     this.shopService.getProdotti().subscribe(
       prodotti => this.prodotti=prodotti
     );
-    //from localstorage retrieve the cart item
-   /* let data = localStorage.getItem('cart');
-    //if this is not null convert it to JSON else initialize it as empty
-    if (data !== null) {
-      this.prodottoCart = JSON.parse(data);
-    } else {
-      this.prodottoCart = [];
-    }*/
+    this.shopService.getCategorie().subscribe(
+      categorie => this.categorie=categorie
+    );
   }
 
-  // we will be taking the books response returned from the database
-  // and we will be adding the retrieved
 
   handleSuccessfulResponse(response) {
     this.prodotti = new Array<Prodotto>();
     //get books returned by the api call
     this.prodottoRecieved = response;
   }
+
+  addToCart(prodotto : Prodotto){
+    this.shopService.aggiungiProdottoCarrello(prodotto, 1).subscribe(
+      () => window.location.reload()
+      );
+  }
+
+  /*onSelectChange() {
+    console.log(this.selVal)
+    this.router.navigate(['/shop'], {queryParams: {
+        category: this.category,
+        page: this.page,
+        sortBy: this.selVal
+      }});
+  }*/
 }

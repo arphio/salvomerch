@@ -11,6 +11,7 @@ public class OrdineProdotto {
    // private Integer prodotto;
     private Ordine ordine;
     private Prodotto prodotto;
+    private Integer quantita;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -20,6 +21,13 @@ public class OrdineProdotto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "quantita", nullable = false)
+    public Integer getQuantita() { return  quantita;}
+    public void setQuantita(int q){
+        this.quantita=q;
     }
 
    /* @Basic
