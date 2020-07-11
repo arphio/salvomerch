@@ -1,5 +1,7 @@
 package it.salvomerch.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -13,6 +15,7 @@ public class ProdottoInCarrello {
     private Prodotto prodotto;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -37,10 +40,7 @@ public class ProdottoInCarrello {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProdottoInCarrello prodottoInCarrello = (ProdottoInCarrello) o;
-        return Objects.equals(id, prodottoInCarrello.id) &&
-              //  Objects.equals(cliente, carrello.cliente) &&
-              //  Objects.equals(prodotto, carrello.prodotto) &&
-                Objects.equals(quantita, prodottoInCarrello.quantita);
+        return this.cliente.equals(prodottoInCarrello.getCliente()) && this.getProdotto().equals(prodottoInCarrello.getProdotto());
     }
 
     @Override
@@ -49,6 +49,7 @@ public class ProdottoInCarrello {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "cliente", referencedColumnName = "id", nullable=false)
     public Cliente getCliente() {
         return cliente;

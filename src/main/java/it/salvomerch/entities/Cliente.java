@@ -2,6 +2,7 @@ package it.salvomerch.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Objects;
 
 @Entity
@@ -34,7 +35,7 @@ public class Cliente {
     }
 
     @Basic
-    @Column(name = "email", nullable = true)
+    @Column(name = "email", nullable = false)
     public String getEmail() {
         return email;
     }
@@ -48,9 +49,7 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return Objects.equals(id, cliente.id) &&
-                Objects.equals(nome, cliente.nome) &&
-                Objects.equals(email, cliente.email);
+        return id==cliente.getId();
     }
 
     @Override
@@ -58,7 +57,7 @@ public class Cliente {
         return Objects.hash(id, nome, email);
     }
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     public Collection<ProdottoInCarrello> getCarrello() {
         return carrello;
     }
@@ -67,7 +66,7 @@ public class Cliente {
         this.carrello = carrellosById;
     }
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     public Collection<Ordine> getOrdini() {
         return ordini;
     }

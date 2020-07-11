@@ -9,12 +9,16 @@ import it.salvomerch.repositories.OrdineRepository;
 import it.salvomerch.repositories.ProdottoInCarrelloRepository;
 import it.salvomerch.support.Carrello;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import java.nio.file.ProviderNotFoundException;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -32,11 +36,17 @@ public class CarrelloService {
     private OrdineRepository ordineRepository;
 
     @Transactional(readOnly = false)
-    public ProdottoInCarrello aggiungiProdotto(OidcUser user, ProdottoInCarrello prodotto){
+    public ProdottoInCarrello aggiungiProdotto(Principal user, ProdottoInCarrello prodotto){
+        System.out.println("user is "+user.getName());
+        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
         Cliente c= clienteService.getCliente(user);
+        System.out.println("cliente is "+c.getId()+ c.getNome()+ c.getEmail()+ c.getCarrello());
         prodotto.setCliente(c);
+        System.out.println("Il prodotto da aggiungere è :" +prodotto.getProdotto());
         for( ProdottoInCarrello p : c.getCarrello()){
+            System.out.println("il prodotto è : "+p.getProdotto().getNome());
             if(p.equals(prodotto)){
+                System.out.println("I prodotti sono uguali");
                 p.setQuantita(p.getQuantita()+prodotto.getQuantita());
                 return p;
             }
@@ -46,7 +56,7 @@ public class CarrelloService {
     }
 
     @Transactional
-    public List<ProdottoInCarrello> updateCarrello(OidcUser user, List<ProdottoInCarrello> prodotti){
+    public List<ProdottoInCarrello> updateCarrello(Principal user, List<ProdottoInCarrello> prodotti){
         Cliente c= clienteService.getCliente(user);
         c.getCarrello().clear();
         for(ProdottoInCarrello p : prodotti){
@@ -59,7 +69,7 @@ public class CarrelloService {
 
 
     @Transactional(readOnly = false)
-    public Ordine registraOrdine(OidcUser user, Ordine ordine){
+    public Ordine registraOrdine(Principal user, Ordine ordine){
         Cliente c= clienteService.getCliente(user);
         if(c.getCarrello().isEmpty())throw new IllegalStateException();
         Ordine newOrdine = new Ordine();
@@ -71,7 +81,7 @@ public class CarrelloService {
         entityManager.flush();
         entityManager.lock(Prodotto.class, LockModeType.OPTIMISTIC);
         entityManager.lock(Carrello.class, LockModeType.OPTIMISTIC);
-        for(ProdottoInCarrello p : c.getCarrello()){
+        for(ProdottoInCarrello p : prodottoInCarrelloRepository.findByCliente(c)){
             Prodotto prod= entityManager.find(Prodotto.class, p.getProdotto().getId());
             newOrdine.addProdotto(prod, p.getQuantita());
             prod.setQuantita(prod.getQuantita()-p.getQuantita());

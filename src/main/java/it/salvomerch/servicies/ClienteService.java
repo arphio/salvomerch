@@ -6,12 +6,18 @@ import it.salvomerch.entities.ProdottoInCarrello;
 import it.salvomerch.repositories.ClienteRepository;
 import it.salvomerch.support.Carrello;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -23,7 +29,7 @@ public class ClienteService {
     private EntityManager entityManager;
 
     @Transactional(readOnly = true)
-    public Carrello getCarrello(@AuthenticationPrincipal OidcUser user){
+    public Carrello getCarrello(Principal user){
         Cliente c= getCliente(user);
         List<ProdottoInCarrello> prodotti = (List<ProdottoInCarrello>) c.getCarrello();
         return new Carrello(prodotti);
@@ -55,16 +61,20 @@ public class ClienteService {
         clienteRepository.save(c);
     }
 
-    public static String getUserEmail(OidcUser user){
-        return user.getEmail();
+    public static String getUserEmail(Principal user){
+        String email=user.getName();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() instanceof OidcUser) email= ((OidcUser) auth.getPrincipal()).getEmail();
+        System.out.println("email is"+ email);
+        return  email;
     }
 
     @Transactional(readOnly = false)
-    public Cliente getCliente(OidcUser user){
+    public Cliente getCliente(Principal user){
         String email= getUserEmail(user);
-        if(!clienteRepository.existsByEmail(email))
-            accounting(user);
-        return getCliente(email);
+        if(clienteRepository.existsByEmail(email))
+            return getCliente(email);
+        return accounting(user);
     }
 
     @Transactional(readOnly = true)
@@ -72,13 +82,20 @@ public class ClienteService {
         return clienteRepository.findByEmail(email);
     }
 
-    @Transactional(readOnly = false)
-    public void accounting(@AuthenticationPrincipal OidcUser user){
-        String email=user.getEmail();
-        if(clienteRepository.existsByEmail(email)) return;
-        Cliente c= new Cliente();
-        c.setNome(user.getFullName());
-        c.setEmail(user.getEmail());
-        clienteRepository.save(c);
+    @Transactional
+    public Cliente accounting(Principal user){
+        String email=user.getName();
+        Cliente c=new Cliente();
+        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() instanceof OidcUser){
+            email=((OidcUser) auth.getPrincipal()).getEmail();
+            c.setNome(((OidcUser) auth.getPrincipal()).getFullName());
+        }
+        c.setCarrello(new LinkedList<>());
+        c.setOrdini(new LinkedList<>());
+        c.setEmail(email);
+        clienteRepository.saveAndFlush(c);
+        System.out.println(c);
+        return c;
     }
 }

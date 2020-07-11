@@ -23,8 +23,10 @@ export class ShopService {
 
   aggiungiProdottoCarrello(prodotto : Prodotto, quantita : number){
      const prodttoInCarr = new ProdottoInCarrello();
-     prodttoInCarr.prodotto=prodotto;
-     prodttoInCarr.quantita=quantita;
+     prodttoInCarr.setProdotto(prodotto);
+     prodttoInCarr.setQuantita(quantita);
+     prodttoInCarr.setId(0);
+     console.log(prodttoInCarr.prodotto.nome+","+prodttoInCarr.quantita);
      return this.http.post(this.shopUrl+'/addtocart', prodttoInCarr);
   }
 
@@ -37,7 +39,7 @@ export class ShopService {
   }
 
   registraOrdine(ordine : Ordine){
-     this.http.post(this.shopUrl+'/orders', ordine);
+     this.http.post(this.shopUrl+'/orderreg', ordine);
   }
 
 

@@ -1,5 +1,6 @@
 package it.salvomerch.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -77,6 +78,7 @@ public class Ordine {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "cliente", referencedColumnName = "id")
     public Cliente getCliente() {
         return cliente;

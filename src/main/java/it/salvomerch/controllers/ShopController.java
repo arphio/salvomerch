@@ -21,7 +21,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/shop")
-@PreAuthorize("hasAuthority('clients')")
 @CrossOrigin("http://localhost:4300")
 public class ShopController {
     @Autowired
@@ -44,16 +43,23 @@ public class ShopController {
     }
 
     @GetMapping("/cart")
-    private Carrello getCarrello(@AuthenticationPrincipal OidcUser user){
+    private Carrello getCarrello(@AuthenticationPrincipal Principal user){
         return clienteService.getCarrello(user);
     }
 
     @PostMapping("/updatecart")
-    private ResponseEntity setCarrello(@AuthenticationPrincipal OidcUser user, @RequestBody Carrello carrello){
+    private ResponseEntity setCarrello(@AuthenticationPrincipal Principal user, @RequestBody Carrello carrello){
         List<ProdottoInCarrello> newCarrello = carrelloService.updateCarrello(user,carrello.getProdotti());
         if( newCarrello!=null)
             return new ResponseEntity(newCarrello, HttpStatus.OK);
         return new ResponseEntity("Error", HttpStatus.BAD_REQUEST);
 
+    }
+
+    @PostMapping("/addtocart")
+    private ResponseEntity addToCart(@AuthenticationPrincipal Principal user, @RequestBody  ProdottoInCarrello prodotto){
+           // System.out.println("prodotto in carrello is: "+prodotto.getProdotto().getNome()+","+prodotto.getQuantita());
+            ProdottoInCarrello p= carrelloService.aggiungiProdotto(user, prodotto);
+            return new ResponseEntity(p, HttpStatus.OK);
     }
 }
