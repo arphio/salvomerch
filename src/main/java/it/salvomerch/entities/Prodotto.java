@@ -16,6 +16,7 @@ public class Prodotto {
     private Collection<ProdottoInCarrello> prodottoInCarrello;
     private Collection<OrdineProdotto> ordineProdotto;
     private Categoria categoria;
+    private String imagePath;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -35,6 +36,15 @@ public class Prodotto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Basic
+    @Column(name = "imagepath", nullable = true, length= 50)
+    public String getImagePath(){
+        return imagePath;
+    }
+    public void setImagePath(String s){
+        imagePath=s;
     }
 
     @Basic

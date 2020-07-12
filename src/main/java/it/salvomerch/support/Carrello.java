@@ -1,5 +1,6 @@
 package it.salvomerch.support;
 
+import it.salvomerch.entities.Prodotto;
 import it.salvomerch.entities.ProdottoInCarrello;
 
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.Objects;
 public class Carrello {
     private List<ProdottoInCarrello> prodotti;
 
+
     public Carrello(List<ProdottoInCarrello> prodotti) {
+
         this.prodotti = prodotti;
     }
 
@@ -17,7 +20,7 @@ public class Carrello {
     }
 
     public void setProdotti(List<ProdottoInCarrello> prodotti) {
-        this.prodotti = prodotti;
+            this.prodotti = prodotti;
     }
 
     @Override

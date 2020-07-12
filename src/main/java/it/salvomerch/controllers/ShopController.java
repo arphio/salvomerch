@@ -1,8 +1,10 @@
 package it.salvomerch.controllers;
 
 import it.salvomerch.entities.Categoria;
+import it.salvomerch.entities.Ordine;
 import it.salvomerch.entities.Prodotto;
 import it.salvomerch.entities.ProdottoInCarrello;
+import it.salvomerch.repositories.OrdineRepository;
 import it.salvomerch.servicies.CarrelloService;
 import it.salvomerch.servicies.CategoriaService;
 import it.salvomerch.servicies.ClienteService;
@@ -36,6 +38,13 @@ public class ShopController {
     public List<Prodotto> getProdotti(){
         return prodottoService.showAllProducts();
     }
+
+    @PostMapping("/orderreg")
+    public ResponseEntity regOridne(@AuthenticationPrincipal Principal user, @RequestBody Ordine ordine) {
+        Ordine o = carrelloService.registraOrdine(user, ordine);
+        return new ResponseEntity(o, HttpStatus.OK);
+    }
+
 
     @GetMapping("/categorie")
     private List<Categoria> getCategorie(){

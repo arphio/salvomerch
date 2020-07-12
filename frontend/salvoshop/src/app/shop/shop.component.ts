@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ShopService} from "../servicies/shop.service";
 import {Categoria} from "../models/categoria";
 import {Pagina} from "../models/pagina";
+import {Carrello} from "../models/carrello";
 
 @Component({
   selector: 'app-shop',
@@ -20,6 +21,7 @@ export class ShopComponent implements OnInit {
   selVal : string;
   category : string;
   pagina : Pagina;
+  carrello : Carrello;
 
   constructor(private router: Router, private shopService : ShopService, private route : ActivatedRoute) {
   }
@@ -31,6 +33,9 @@ export class ShopComponent implements OnInit {
     );
     this.shopService.getCategorie().subscribe(
       categorie => this.categorie=categorie
+    );
+    this.shopService.getCarrello().subscribe(
+      carrello => this.carrello=carrello
     );
   }
 
@@ -45,6 +50,9 @@ export class ShopComponent implements OnInit {
     this.shopService.aggiungiProdottoCarrello(prodotto, 1).subscribe(
       () => window.location.reload()
       );
+    this.shopService.getCarrello().subscribe(
+      carrello => this.carrello=carrello
+    );
   }
 
   /*onSelectChange() {

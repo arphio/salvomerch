@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.transaction.TransactionScoped;
 import java.nio.file.ProviderNotFoundException;
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -98,4 +99,5 @@ public class CarrelloService {
     public List<ProdottoInCarrello> getProdottiCarrello(String email){
         return prodottoInCarrelloRepository.findByCliente_Email(email);
     }
+
 }

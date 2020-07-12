@@ -1,12 +1,56 @@
 <h1>SHOP</h1>
+
+<div class="container row">
+  <div class="col-md-2">
+    <h1>Prodotti</h1>
+  </div>
+  <div class="col-md-10 custom-products-cart-container">
+    <div class="offset-md-8">
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown">
+          <br>
+          <a href="#" class="btn btn-info btn-lg" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="fa fa-shopping-cart">
+                            Prodotti aggiunti al carrello:
+                        </span>
+            <span class="caret">{{carrello.prodotti.length}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-cart" role="menu">
+            <li *ngFor="let item of carrello.prodotti">
+              <div class="item product-cart-item row">
+                <div class="col-md-8" *ngIf="item">{{item.prodotto.nome}}</div>
+                <div class="col-md-4" *ngIf="item"><strong>€{{item.prodotto.prezzo}}</strong></div>
+                <div class="col-md-4" *ngIf="item"><strong>{{item.quantita}}</strong></div>
+              </div>
+            </li>
+            <hr>
+            <li><a class="btn btn-small btn-success" role="button"> <!---(click)="goToCart()"--->View Cart</a></li>
+            <br>
+            <li *ngIf="carrello.prodotti.length > 0">
+              <a class="btn btn-small btn-warning" role="button"> <!--- (click)="emptyCart()"---->Empty Cart</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr>
+<hr>
+
+
+
 <div class="container row">
 <div class="col-md-4" *ngFor="let prodotto of prodotti;let i=index">
-  <div>
-    <div >
-      <div>
+  <div class="card card-block">
+    <img class="custom-image-style" style="background-image: url({{prodotto.imagePath}})" height="200" width="200" style="margin-left: 60px;
+          margin-top: 10px">
+    <div class="book-desc-container row">
+        <div>
         <p style="margin-left: 60px"><strong>{{prodotto.nome}}: €{{prodotto.prezzo}}</strong></p>
-      </div>
-      <div class="offset-md-4 col-md-4">
+        </div>
+        <div class="offset-md-4 col-md-4">
         <button class="btn btn-primary btn-sm" (click)="addToCart(prodotto)">
         Add To Cart</button>
       </div>

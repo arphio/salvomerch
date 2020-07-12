@@ -24,6 +24,7 @@ public class Cliente {
         this.id = id;
     }
 
+
     @Basic
     @Column(name = "nome", nullable = true, length = 20)
     public String getNome() {

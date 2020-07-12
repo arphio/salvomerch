@@ -6,4 +6,5 @@ export class Prodotto {
   prezzo: number;
   quantita : number;
   categoria : Categoria;
+  imagePath : string;
 }

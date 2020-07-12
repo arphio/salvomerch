@@ -30,8 +30,8 @@ export class ShopService {
      return this.http.post(this.shopUrl+'/addtocart', prodttoInCarr);
   }
 
-  getCarrello(){
-     return this.http.get(this.shopUrl+'/cart');
+  getCarrello() : Observable<Carrello>{
+     return this.http.get<Carrello>(this.shopUrl+'/cart');
   }
 
   updateCarrello(cart : Carrello){
