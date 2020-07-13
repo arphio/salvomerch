@@ -1,61 +1,184 @@
-<h1>SHOP</h1>
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <div class="container">
 
-<div class="container row">
-  <div class="col-md-2">
-    <h1>Prodotti</h1>
-  </div>
-  <div class="col-md-10 custom-products-cart-container">
-    <div class="offset-md-8">
-      <ul class="nav navbar-nav navbar-right">
+    <!-- Brand -->
+    <a class="navbar-brand waves-effect"  target="_blank">
+      <strong class="blue-text">Salvoshop</strong>
+    </a>
 
-        <li class="dropdown">
-          <br>
-          <a href="#" class="btn btn-info btn-lg" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="fa fa-shopping-cart">
-                            Prodotti aggiunti al carrello:
-                        </span>
-            <span class="caret">{{carrello.prodotti.length}}</span>
+    <!-- Collapse -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Left -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link waves-effect" href="#">Home
+            <span class="sr-only">(current)</span>
           </a>
-          <ul class="dropdown-menu dropdown-cart" role="menu">
-            <li *ngFor="let item of carrello.prodotti">
-              <div class="item product-cart-item row">
-                <div class="col-md-8" *ngIf="item">{{item.prodotto.nome}}</div>
-                <div class="col-md-4" *ngIf="item"><strong>€{{item.prodotto.prezzo}}</strong></div>
-                <div class="col-md-4" *ngIf="item"><strong>{{item.quantita}}</strong></div>
-              </div>
-            </li>
-            <hr>
-            <li><a class="btn btn-small btn-success" role="button"> <!---(click)="goToCart()"--->View Cart</a></li>
-            <br>
-            <li *ngIf="carrello.prodotti.length > 0">
-              <a class="btn btn-small btn-warning" role="button"> <!--- (click)="emptyCart()"---->Empty Cart</a></li>
-          </ul>
         </li>
       </ul>
+
+      <!-- Right -->
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+          <a class="nav-link waves-effect">
+            <span class="badge red z-depth-1 mr-1">  </span>
+            <i class="fas fa-shopping-cart"></i>
+            <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+          </a>
+        </li>
+      </ul>
+
     </div>
+
   </div>
-</div>
+</nav>
+<!-- Navbar -->
 
-<hr>
-<hr>
+<!--Main layout-->
+<main class="mt-5 pt-4">
+  <div class="container dark-grey-text mt-5">
 
+    <!--Grid row-->
+    <div class="row wow fadeIn" *ngFor="let prodotto of prodotti; let i=index">
 
+      <!--Grid column-->
+      <div class="col-md-6 mb-4">
 
-<div class="container row">
-<div class="col-md-4" *ngFor="let prodotto of prodotti;let i=index">
-  <div class="card card-block">
-    <img class="custom-image-style" style="background-image: url({{prodotto.imagePath}})" height="200" width="200" style="margin-left: 60px;
-          margin-top: 10px">
-    <div class="book-desc-container row">
-        <div>
-        <p style="margin-left: 60px"><strong>{{prodotto.nome}}: €{{prodotto.prezzo}}</strong></p>
-        </div>
-        <div class="offset-md-4 col-md-4">
-        <button class="btn btn-primary btn-sm" (click)="addToCart(prodotto)">
-        Add To Cart</button>
+        <img src="{{prodotto.imagePath}}" class="img-fluid" alt="">
+
       </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-6 mb-4">
+
+        <!--Content-->
+        <div class="p-4">
+
+          <div class="mb-3">
+            <a href="">
+              <span class="badge purple mr-1"></span>
+            </a>
+            <a href="">
+              <span class="badge blue mr-1">New</span>
+            </a>
+          </div>
+
+          <p class="lead">
+            <span>€{{prodotto.prezzo}}</span>
+          </p>
+
+          <p class="lead font-weight-bold">Description</p>
+
+          <p></p>
+
+          <form class="d-flex justify-content-left">
+            <!-- Default input -->
+            <button class="btn btn-primary btn-md my-0 p" type="submit" (click)="addToCart(prodotto)">Add to cart
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </button>
+
+          </form>
+
+        </div>
+        <!--Content-->
+
+      </div>
+      <!--Grid column-->
+
     </div>
+    <!--Grid row-->
+
+    <hr>
+
+    <!--Grid row-->
+    <div class="row d-flex justify-content-center wow fadeIn">
+
+      <!--Grid column-->
+      <div class="col-md-6 text-center">
+
+        <h4 class="my-4 h4">Additional information</h4>
+
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
+          voluptates,
+          quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+    <!--Grid row-->
+    <div class="row wow fadeIn">
+
+      <!--Grid column-->
+      <div class="col-lg-4 col-md-12 mb-4">
+
+        <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-4 col-md-6 mb-4">
+
+        <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-4 col-md-6 mb-4">
+
+        <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
 
   </div>
-</div>
-</div>
+</main>
+<!--Main layout-->
+
+    <!--Footer-->
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+      <hr class="my-4">
+
+
+  <!-- Social icons -->
+  <div class="pb-4">
+    <a href="https://www.instagram.com/salvoritz/" target="_blank">
+      <i class="fab fa-facebook-f mr-3"></i>
+    </a>
+
+    <a href="https://www.facebook.com/salvoritz-103238887801714/" target="_blank">
+      <i class="fab fa-facebook-f mr-3"></i>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=j33Yx6GdhWQ" target="_blank">
+      <i class="fab fa-youtube mr-3"></i>
+    </a>
+  </div>
+  <!-- Social icons -->
+
+  <!--Copyright-->
+  <div class="footer-copyright py-3">
+    © 2018 Copyright:
+    <a href="" target="_blank"> Alfredo Camposano </a>
+  </div>
+  <!--/.Copyright-->
+
+</footer>
+<!--/.Footer-->

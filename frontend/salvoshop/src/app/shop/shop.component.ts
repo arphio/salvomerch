@@ -21,7 +21,7 @@ export class ShopComponent implements OnInit {
   selVal : string;
   category : string;
   pagina : Pagina;
-  carrello : Carrello;
+  carrello =new Carrello();
 
   constructor(private router: Router, private shopService : ShopService, private route : ActivatedRoute) {
   }
@@ -53,6 +53,13 @@ export class ShopComponent implements OnInit {
     this.shopService.getCarrello().subscribe(
       carrello => this.carrello=carrello
     );
+  }
+
+  goToCart(){
+    this.router.navigate(['/cart']);
+  }
+
+  empyCart(){
   }
 
   /*onSelectChange() {

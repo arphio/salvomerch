@@ -36,10 +36,17 @@ public class CarrelloService {
     @Autowired
     private OrdineRepository ordineRepository;
 
+
+    @Transactional(readOnly = false)
+    public void rimuoviProdottoInCarrello(Principal user, ProdottoInCarrello prodotto){
+        Cliente c= clienteService.getCliente(user);
+        c.getCarrello().remove(prodotto);
+        entityManager.flush();
+    }
+
     @Transactional(readOnly = false)
     public ProdottoInCarrello aggiungiProdotto(Principal user, ProdottoInCarrello prodotto){
         System.out.println("user is "+user.getName());
-        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
         Cliente c= clienteService.getCliente(user);
         System.out.println("cliente is "+c.getId()+ c.getNome()+ c.getEmail()+ c.getCarrello());
         prodotto.setCliente(c);

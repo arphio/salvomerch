@@ -12,6 +12,19 @@ import {ProdottoInCarrello} from "../models/prodotto-in-carrello";
 })
 export class CarrelloService {
 
+    private carrelloUrl : string;
+
+  constructor(private http : HttpClient) {
+    this.carrelloUrl='http://localhost:8080/cart';
+  }
+
+    getCarrello() : Observable<ProdottoInCarrello[]>{
+      return this.http.get<ProdottoInCarrello[]>(this.carrelloUrl);
+    }
+
+    removeProdotto(prodotto : ProdottoInCarrello) {
+        return this.http.post(this.carrelloUrl+'/remove', prodotto);
+    }
 
 
   }
