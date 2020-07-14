@@ -8,11 +8,19 @@ import java.util.Objects;
 
 public class Carrello {
     private List<ProdottoInCarrello> prodotti;
+    private double totale;
+    private int totNum;
 
 
     public Carrello(List<ProdottoInCarrello> prodotti) {
 
         this.prodotti = prodotti;
+        this.totale=0;
+        this.totNum=0;
+        for(ProdottoInCarrello p : prodotti){
+            totale+=p.getQuantita()*p.getProdotto().getPrezzo();
+            totNum+=p.getQuantita();
+        }
     }
 
     public List<ProdottoInCarrello> getProdotti() {
@@ -21,6 +29,22 @@ public class Carrello {
 
     public void setProdotti(List<ProdottoInCarrello> prodotti) {
             this.prodotti = prodotti;
+    }
+
+    public double getTotale() {
+        return totale;
+    }
+
+    public void setTotale(double totale) {
+        this.totale = totale;
+    }
+
+    public int getTotNum() {
+        return totNum;
+    }
+
+    public void setTotNum(int totNum) {
+        this.totNum = totNum;
     }
 
     @Override

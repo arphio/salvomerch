@@ -5,6 +5,7 @@ export class ProdottoInCarrello {
   id : number;
   quantita : number;
   prodotto : Prodotto;
+  subTot : number;
 
   setId(id : number){
     this.id=id;

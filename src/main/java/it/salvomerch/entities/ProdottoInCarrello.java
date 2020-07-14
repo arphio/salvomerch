@@ -13,6 +13,7 @@ public class ProdottoInCarrello {
     private Integer quantita;
     private Cliente cliente;
     private Prodotto prodotto;
+    private double subTot;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,7 @@ public class ProdottoInCarrello {
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     @Basic
     @Column(name = "quantita", nullable = true, precision = 0)

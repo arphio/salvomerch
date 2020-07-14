@@ -5,6 +5,7 @@ import {ShopService} from "../servicies/shop.service";
 import {Categoria} from "../models/categoria";
 import {Pagina} from "../models/pagina";
 import {Carrello} from "../models/carrello";
+import {CarrelloService} from "../servicies/carrello.service";
 
 @Component({
   selector: 'app-shop',
@@ -23,7 +24,7 @@ export class ShopComponent implements OnInit {
   pagina : Pagina;
   carrello =new Carrello();
 
-  constructor(private router: Router, private shopService : ShopService, private route : ActivatedRoute) {
+  constructor(private router: Router, private shopService : ShopService, private carrelloService : CarrelloService) {
   }
 
 
@@ -34,7 +35,7 @@ export class ShopComponent implements OnInit {
     this.shopService.getCategorie().subscribe(
       categorie => this.categorie=categorie
     );
-    this.shopService.getCarrello().subscribe(
+    this.carrelloService.getCarrello().subscribe(
       carrello => this.carrello=carrello
     );
   }

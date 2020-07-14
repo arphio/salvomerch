@@ -7,11 +7,11 @@ import {Cliente} from "../models/cliente";
 import {Carrello} from "../models/carrello";
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.css']
 })
-export class CartComponent implements OnInit {
+export class CheckoutComponent implements OnInit {
 
   carrello = new Carrello();
   prodotti : Prodotto[];

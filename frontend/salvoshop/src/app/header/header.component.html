@@ -1,0 +1,76 @@
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <div class="container">
+
+    <!-- Brand -->
+    <a class="navbar-brand waves-effect" target="_blank">
+      <strong class="blue-text">Salvoshop</strong>
+    </a>
+    <a>
+      <div>
+        <button *ngIf="!isAuthenticated" (click)="oktaAuth.loginRedirect()">Login</button>
+        <button *ngIf="isAuthenticated" (click)="oktaAuth.logout()">Logout</button>
+      </div>
+    </a>
+
+    <!-- Collapse -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Left -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link waves-effect" routerLink="/home">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link waves-effect" routerLink="/shop">Shop
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right -->
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="dropdown">
+          <br>
+          <a href="#" class="btn btn-toolbar btn-lg" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="fa fa-shopping-cart">
+                            Carrello:
+                        </span>
+            <span class="caret">{{carrello.totNum}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-cart" role="menu">
+            <li *ngFor="let item of carrello.prodotti">
+              <div class="item product-cart-item row">
+                <div class="col-md-8" *ngIf="item">{{item.prodotto.nome}} x {{item.quantita}}</div>
+                <div class="col-md-4" *ngIf="item"><strong>€{{item.quantita*item.prodotto.prezzo}}</strong></div>
+                <div class="col-md-2" *ngIf="item">
+                  <input type="number" value="1" id="val" aria-label="Search" class="form-control" style="width: 50px">
+                  <a class="btn btn-small btn-danger" role="button" (click)="removeFromCart(item)">Rimuovi</a>
+                </div>
+              </div>
+            </li>
+            <hr>
+            <li><a class="btn btn-small btn-success" role="button" routerLink="/cart">View Cart</a></li>
+            <br>
+            <li *ngIf="carrello.totNum > 0">
+              <a class="btn btn-small btn-warning" role="button" (click)="emptyCart()">Empty Cart</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</nav>
+<!-- Navbar -->
+
+
+
