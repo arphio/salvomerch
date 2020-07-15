@@ -51,10 +51,6 @@
               <div class="item product-cart-item row">
                 <div class="col-md-8" *ngIf="item">{{item.prodotto.nome}} x {{item.quantita}}</div>
                 <div class="col-md-4" *ngIf="item"><strong>€{{item.quantita*item.prodotto.prezzo}}</strong></div>
-                <div class="col-md-2" *ngIf="item">
-                  <input type="number" value="1" id="val" aria-label="Search" class="form-control" style="width: 50px">
-                  <a class="btn btn-small btn-danger" role="button" (click)="removeFromCart(item)">Rimuovi</a>
-                </div>
               </div>
             </li>
             <hr>

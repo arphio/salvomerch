@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Prodotto} from "../models/prodotto";
 import {Cliente} from "../models/cliente";
 import {Carrello} from "../models/carrello";
+import {Ordine} from "../models/ordine";
 
 @Component({
   selector: 'app-cart',
@@ -13,9 +14,13 @@ import {Carrello} from "../models/carrello";
 })
 export class CartComponent implements OnInit {
 
+
+  ordine : Ordine;
   carrello = new Carrello();
   prodotti : Prodotto[];
   cliente = new Cliente();
+  name : string;
+  email : string;
 
   constructor(private carrelloService : CarrelloService, private router : Router) { }
 
@@ -25,6 +30,22 @@ export class CartComponent implements OnInit {
     );
     this.carrelloService.getCliente().subscribe(
       cliente => this.cliente=cliente
+    );
+  }
+
+  removeFromCart(item : ProdottoInCarrello){
+    this.carrelloService.removeProdotto(item).subscribe(
+      () => window.location.reload()
+    );
+  }
+
+  registOrder(){
+    this.ordine = new Ordine();
+    this.cliente.nome=this.name;
+    this.cliente.email=this.email;
+    this.ordine.cliente=this.cliente;
+    this.carrelloService.registerOrder(this.ordine).subscribe(
+      () => window.location.reload()
     );
   }
 

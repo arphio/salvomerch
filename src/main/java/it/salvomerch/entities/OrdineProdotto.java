@@ -1,5 +1,7 @@
 package it.salvomerch.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -66,6 +68,7 @@ public class OrdineProdotto {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "ordine", referencedColumnName = "id")
     public Ordine getOrdine() {
         return ordine;
@@ -76,6 +79,7 @@ public class OrdineProdotto {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "prodotto", referencedColumnName = "id")
     public Prodotto getProdotto() {
         return prodotto;

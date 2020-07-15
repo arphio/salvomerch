@@ -7,6 +7,7 @@ import {Prodotto} from "../models/prodotto";
 import {Carrello} from "../models/carrello";
 import {ProdottoInCarrello} from "../models/prodotto-in-carrello";
 import {Cliente} from "../models/cliente";
+import {Ordine} from "../models/ordine";
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +20,21 @@ export class CarrelloService {
     this.carrelloUrl='http://localhost:8080/cart';
   }
 
+
+    registerOrder(ordine : Ordine) {
+     return this.http.post(this.carrelloUrl+'/orderreg', ordine);
+    }
+
     getCarrello() : Observable<Carrello>{
       return this.http.get<Carrello>(this.carrelloUrl);
     }
 
-    removeProdotto(prodotto : ProdottoInCarrello, quantita : number) {
-        return this.http.post(this.carrelloUrl+'/remove', prodotto, quantita);
+    removeProdotto(prodotto : ProdottoInCarrello) {
+        return this.http.post(this.carrelloUrl+'/remove', prodotto);
+    }
+
+    emptyCarrello() {
+        return this.http.get(this.carrelloUrl+'/empty');
     }
 
     getClienteName() : Observable<string>{

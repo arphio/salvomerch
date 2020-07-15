@@ -30,11 +30,15 @@ export class HeaderComponent implements OnInit {
 
 
   removeFromCart(item : ProdottoInCarrello){
-    this.carrelloService.removeProdotto(item, 1);
+    this.carrelloService.removeProdotto(item).subscribe(
+      () => window.location.reload()
+    );
   }
 
   emptyCart(){
-
+      this.carrelloService.emptyCarrello().subscribe(
+        () => window.location.reload()
+      );
   }
 
   goToCart(){

@@ -42,6 +42,10 @@ public class ProdottoInCarrello {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProdottoInCarrello prodottoInCarrello = (ProdottoInCarrello) o;
+        System.out.println(this.cliente+" "
+                + prodottoInCarrello.getCliente().getEmail()+
+                "\n"+this.getProdotto().getNome()+" "
+                +prodottoInCarrello.getProdotto().getNome());
         return this.cliente.equals(prodottoInCarrello.getCliente()) && this.getProdotto().equals(prodottoInCarrello.getProdotto());
     }
 

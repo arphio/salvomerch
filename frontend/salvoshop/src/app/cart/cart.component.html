@@ -52,12 +52,12 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">@</span>
               </div>
-              <input type="text" class="form-control py-0" value="{{cliente.nome}}" aria-describedby="basic-addon1">
+              <input [(ngModel)]="name" name="name" type="text" class="form-control py-0"  value="{{cliente.nome}}" aria-describedby="basic-addon1">
             </div>
 
             <!--email-->
             <div class="md-form mb-5">
-              <input type="text" id="email" class="form-control" value="{{cliente.email}}">
+              <input [(ngModel)]="email" name="email" type="text" id="email" class="form-control"  value="{{cliente.email}}">
               <label for="email" class="">Email (optional)</label>
             </div>
 
@@ -177,7 +177,7 @@
               </div>
             </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="registOrder()">Confirm order</button>
 
           </form>
 
@@ -204,6 +204,9 @@
               <small class="text-muted">Quantità: {{prodotto.quantita}}</small>
             </div>
             <span class="text-muted">€{{prodotto.prodotto.prezzo}}</span>
+            <div>
+              <a class="btn btn-small btn-danger" role="button" type="submit" (click)="removeFromCart(prodotto)">Rimuovi</a>
+            </div>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (EUR)</span>

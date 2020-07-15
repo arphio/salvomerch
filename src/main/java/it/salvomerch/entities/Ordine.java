@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Objects;
 
 @Entity
@@ -98,6 +99,7 @@ public class Ordine {
     }
 
     public void addProdotto(Prodotto p, int quantita){
+        if(this.ordineProdottosById==null) this.ordineProdottosById=new LinkedList<>();
         OrdineProdotto op= new OrdineProdotto();
         op.setOrdine(this);
         op.setProdotto(p);

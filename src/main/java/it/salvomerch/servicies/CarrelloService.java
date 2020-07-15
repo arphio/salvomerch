@@ -23,6 +23,7 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarrelloService {
@@ -36,11 +37,21 @@ public class CarrelloService {
     @Autowired
     private OrdineRepository ordineRepository;
 
+    @Transactional(readOnly = false)
+    public void emptyCart(Principal user){
+        Cliente c= clienteService.getCliente(user);
+        List<ProdottoInCarrello> car= (List<ProdottoInCarrello>)c.getCarrello();
+        car.clear();
+        entityManager.flush();
+    }
+
 
     @Transactional(readOnly = false)
     public void rimuoviProdottoInCarrello(Principal user, ProdottoInCarrello prodotto){
         Cliente c= clienteService.getCliente(user);
+        prodotto.setCliente(c);
         c.getCarrello().remove(prodotto);
+        System.out.println("removed prodotto "+prodotto.getProdotto().getNome());
         entityManager.flush();
     }
 
@@ -81,22 +92,23 @@ public class CarrelloService {
         Cliente c= clienteService.getCliente(user);
         if(c.getCarrello().isEmpty())throw new IllegalStateException();
         Ordine newOrdine = new Ordine();
+        System.out.println(c.getEmail()+" "+c.getNome());
         newOrdine.setCliente(c);
         newOrdine.setDataacquisto(Timestamp.from(Instant.now()));
         newOrdine.setId(0);
         newOrdine.setTotale(0.0);
         newOrdine= ordineRepository.save(newOrdine);
         entityManager.flush();
-        entityManager.lock(Prodotto.class, LockModeType.OPTIMISTIC);
-        entityManager.lock(Carrello.class, LockModeType.OPTIMISTIC);
+      //  entityManager.lock(ProdottoInCarrello.class, LockModeType.OPTIMISTIC);
         for(ProdottoInCarrello p : prodottoInCarrelloRepository.findByCliente(c)){
             Prodotto prod= entityManager.find(Prodotto.class, p.getProdotto().getId());
+       //     entityManager.lock(Prodotto.class, LockModeType.OPTIMISTIC);
             newOrdine.addProdotto(prod, p.getQuantita());
             prod.setQuantita(prod.getQuantita()-p.getQuantita());
+      //      entityManager.lock(Prodotto.class, LockModeType.NONE);
         }
         c.getCarrello().clear();
-        entityManager.lock(Prodotto.class, LockModeType.NONE);
-        entityManager.lock(Carrello.class, LockModeType.NONE);
+       // entityManager.lock(ProdottoInCarrello.class, LockModeType.NONE);
         entityManager.flush();
         return newOrdine;
     }

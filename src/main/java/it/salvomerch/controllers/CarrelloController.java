@@ -2,6 +2,7 @@ package it.salvomerch.controllers;
 
 
 import it.salvomerch.entities.Cliente;
+import it.salvomerch.entities.Ordine;
 import it.salvomerch.entities.ProdottoInCarrello;
 import it.salvomerch.servicies.CarrelloService;
 import it.salvomerch.servicies.ClienteService;
@@ -26,6 +27,13 @@ public class CarrelloController {
     @Autowired
     private ClienteService clienteService;
 
+
+    @PostMapping("/orderreg")
+    public ResponseEntity regOridne(@AuthenticationPrincipal Principal user, @RequestBody Ordine ordine) {
+        Ordine o = carrelloService.registraOrdine(user, ordine);
+        return new ResponseEntity(o, HttpStatus.OK);
+    }
+
     @GetMapping
     public Carrello getProdottiInCarr(@AuthenticationPrincipal Principal user) {
         Cliente c = clienteService.getCliente(user);
@@ -33,8 +41,14 @@ public class CarrelloController {
         return carr;
     }
 
+    @GetMapping("/empty")
+    public ResponseEntity emptyCarrello(@AuthenticationPrincipal Principal user){
+        carrelloService.emptyCart(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping("/remove")
-    public ResponseEntity rimuoviProdotto(@AuthenticationPrincipal Principal user, @RequestBody ProdottoInCarrello prodottoInCarrello, @RequestBody int quantita){
+    public ResponseEntity rimuoviProdotto(@AuthenticationPrincipal Principal user, @RequestBody ProdottoInCarrello prodottoInCarrello){
         carrelloService.rimuoviProdottoInCarrello(user, prodottoInCarrello);
         return new ResponseEntity(prodottoInCarrello, HttpStatus.OK);
     }
