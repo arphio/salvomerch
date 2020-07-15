@@ -16,6 +16,8 @@ public class OrdineProdotto {
     private Integer quantita;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -79,7 +81,6 @@ public class OrdineProdotto {
     }
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "prodotto", referencedColumnName = "id")
     public Prodotto getProdotto() {
         return prodotto;

@@ -21,8 +21,8 @@ export class CarrelloService {
   }
 
 
-    registerOrder(ordine : Ordine) {
-     return this.http.post(this.carrelloUrl+'/orderreg', ordine);
+    registerOrder() {
+     return this.http.get(this.carrelloUrl+'/orderreg');
     }
 
     getCarrello() : Observable<Carrello>{

@@ -99,7 +99,6 @@ public class Ordine {
     }
 
     public void addProdotto(Prodotto p, int quantita){
-        if(this.ordineProdottosById==null) this.ordineProdottosById=new LinkedList<>();
         OrdineProdotto op= new OrdineProdotto();
         op.setOrdine(this);
         op.setProdotto(p);

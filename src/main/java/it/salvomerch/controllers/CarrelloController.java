@@ -28,9 +28,9 @@ public class CarrelloController {
     private ClienteService clienteService;
 
 
-    @PostMapping("/orderreg")
-    public ResponseEntity regOridne(@AuthenticationPrincipal Principal user, @RequestBody Ordine ordine) {
-        Ordine o = carrelloService.registraOrdine(user, ordine);
+    @GetMapping("/orderreg")
+    public ResponseEntity regOridne(@AuthenticationPrincipal Principal user) {
+        Ordine o = carrelloService.registraOrdine(user);
         return new ResponseEntity(o, HttpStatus.OK);
     }
 

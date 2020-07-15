@@ -1,10 +1,8 @@
 package it.salvomerch.servicies;
 
-import it.salvomerch.entities.Cliente;
-import it.salvomerch.entities.Ordine;
-import it.salvomerch.entities.Prodotto;
-import it.salvomerch.entities.ProdottoInCarrello;
+import it.salvomerch.entities.*;
 import it.salvomerch.repositories.ClienteRepository;
+import it.salvomerch.repositories.OrdineProdottoRepository;
 import it.salvomerch.repositories.OrdineRepository;
 import it.salvomerch.repositories.ProdottoInCarrelloRepository;
 import it.salvomerch.support.Carrello;
@@ -13,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -22,6 +21,7 @@ import java.nio.file.ProviderNotFoundException;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +36,8 @@ public class CarrelloService {
     private ClienteService clienteService;
     @Autowired
     private OrdineRepository ordineRepository;
+    @Autowired
+    private OrdineProdottoRepository ordineProdottoRepository;
 
     @Transactional(readOnly = false)
     public void emptyCart(Principal user){
@@ -66,7 +68,9 @@ public class CarrelloService {
             System.out.println("il prodotto è : "+p.getProdotto().getNome());
             if(p.equals(prodotto)){
                 System.out.println("I prodotti sono uguali");
-                p.setQuantita(p.getQuantita()+prodotto.getQuantita());
+                int newQuant=p.getQuantita()+prodotto.getQuantita();
+                //if(newQuant>p.getProdotto().getQuantita())throw new IllegalStateException("non disponibile!");
+                p.setQuantita(newQuant);
                 return p;
             }
         }
@@ -87,8 +91,8 @@ public class CarrelloService {
     }
 
 
-    @Transactional(readOnly = false)
-    public Ordine registraOrdine(Principal user, Ordine ordine){
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public Ordine registraOrdine(Principal user){
         Cliente c= clienteService.getCliente(user);
         if(c.getCarrello().isEmpty())throw new IllegalStateException();
         Ordine newOrdine = new Ordine();
@@ -97,14 +101,21 @@ public class CarrelloService {
         newOrdine.setDataacquisto(Timestamp.from(Instant.now()));
         newOrdine.setId(0);
         newOrdine.setTotale(0.0);
+        newOrdine.setOrdineProdottosById(new LinkedList<>());
         newOrdine= ordineRepository.save(newOrdine);
         entityManager.flush();
       //  entityManager.lock(ProdottoInCarrello.class, LockModeType.OPTIMISTIC);
         for(ProdottoInCarrello p : prodottoInCarrelloRepository.findByCliente(c)){
             Prodotto prod= entityManager.find(Prodotto.class, p.getProdotto().getId());
        //     entityManager.lock(Prodotto.class, LockModeType.OPTIMISTIC);
-            newOrdine.addProdotto(prod, p.getQuantita());
-            prod.setQuantita(prod.getQuantita()-p.getQuantita());
+            OrdineProdotto op= new OrdineProdotto();
+            op.setOrdine(newOrdine);
+            op.setProdotto(prod);
+            op.setQuantita(p.getQuantita());
+            ordineProdottoRepository.save(op);
+            newOrdine.setTotale(newOrdine.getTotale()+prod.getPrezzo()*p.getQuantita());
+            //newOrdine.addProdotto(prod, p.getQuantita());
+            //prod.setQuantita(prod.getQuantita()-p.getQuantita());
       //      entityManager.lock(Prodotto.class, LockModeType.NONE);
         }
         c.getCarrello().clear();

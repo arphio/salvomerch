@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
     this.cliente.nome=this.name;
     this.cliente.email=this.email;
     this.ordine.cliente=this.cliente;
-    this.carrelloService.registerOrder(this.ordine).subscribe(
+    this.carrelloService.registerOrder().subscribe(
       () => window.location.reload()
     );
   }

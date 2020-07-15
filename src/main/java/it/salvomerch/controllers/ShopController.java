@@ -39,9 +39,9 @@ public class ShopController {
         return prodottoService.showAllProducts();
     }
 
-    @PostMapping("/orderreg")
-    public ResponseEntity regOridne(@AuthenticationPrincipal Principal user, @RequestBody Ordine ordine) {
-        Ordine o = carrelloService.registraOrdine(user, ordine);
+    @GetMapping("/orderreg")
+    public ResponseEntity regOridne(@AuthenticationPrincipal Principal user) {
+        Ordine o = carrelloService.registraOrdine(user);
         return new ResponseEntity(o, HttpStatus.OK);
     }
 
@@ -67,6 +67,7 @@ public class ShopController {
 
     @PostMapping("/addtocart")
     private ResponseEntity addToCart(@AuthenticationPrincipal Principal user, @RequestBody  ProdottoInCarrello prodotto){
+           // if(prodotto.getProdotto().getQuantita()<=0)throw new IllegalStateException("non disponibile!");
            // System.out.println("prodotto in carrello is: "+prodotto.getProdotto().getNome()+","+prodotto.getQuantita());
             ProdottoInCarrello p= carrelloService.aggiungiProdotto(user, prodotto);
             return new ResponseEntity(p, HttpStatus.OK);

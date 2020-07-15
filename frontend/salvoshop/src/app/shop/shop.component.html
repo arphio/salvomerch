@@ -40,9 +40,10 @@
 
           <form class="d-flex justify-content-left">
             <!-- Default input -->
-            <button class="btn btn-primary btn-md my-0 p" type="submit" (click)="addToCart(prodotto)">Add to cart
+            <button class="btn btn-primary btn-md my-0 p" type="submit" *ngIf="prodotto.quantita>0" (click)="addToCart(prodotto)">Add to cart
               <i class="fas fa-shopping-cart ml-1"></i>
             </button>
+            <span *ngIf="prodotto.quantita<=0">NON DISPONIBILE</span>
 
           </form>
 
