@@ -3,8 +3,9 @@ import {OrdineProdotto} from "./ordine-prodotto";
 
 export class Ordine {
   id : number;
-  data : Date;
+  dataacquisto : Date;
   totale : number;
   cliente : Cliente;
-  prodotti : OrdineProdotto[];
+  ordineProdottosById : OrdineProdotto[];
+
 }

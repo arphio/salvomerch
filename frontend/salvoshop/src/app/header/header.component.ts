@@ -11,7 +11,7 @@ import {ProdottoInCarrello} from "../models/prodotto-in-carrello";
 })
 export class HeaderComponent implements OnInit {
 
-  isAuthenticated: boolean;
+  public isAuthenticated: boolean;
   carrello = new Carrello();
 
   constructor(public oktaAuth: OktaAuthService, private carrelloService : CarrelloService) {

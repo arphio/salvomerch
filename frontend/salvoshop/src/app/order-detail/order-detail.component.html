@@ -1,0 +1,18 @@
+<div class="order-detail">
+  <h2>Order details</h2>
+
+      <h3>Data Ordine</h3>
+      <h4>{{ordine.dataacquisto | date:'dd/MM/yyyy HH:mm'}}</h4>
+    <div>
+      <ul>
+        <li *ngFor="let prodotto of prodottiOrdinati">
+          <br>Nome: {{prodotto.prodotto.nome}}
+          <br>Quantita: {{prodotto.quantita}}
+          <br>SubTot: €{{prodotto.quantita*prodotto.prodotto.prezzo}}
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Totale: €{{ordine.totale}}</h3>
+    </div>
+</div>

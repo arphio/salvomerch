@@ -34,25 +34,6 @@ public class OrdineProdotto {
         this.quantita=q;
     }
 
-   /* @Basic
-    @Column(name = "ordine", nullable = true)
-    public Integer getOrdine() {
-        return ordine;
-    }
-
-    public void setOrdine(Integer ordine) {
-        this.ordine = ordine;
-    }
-
-    @Basic
-    @Column(name = "prodotto", nullable = true)
-    public Integer getProdotto() {
-        return prodotto;
-    }
-
-    public void setProdotto(Integer prodotto) {
-        this.prodotto = prodotto;
-    }*/
 
     @Override
     public boolean equals(Object o) {

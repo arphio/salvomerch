@@ -5,4 +5,5 @@ export class OrdineProdotto {
   id : number;
   ordine : Ordine;
   prodotto : Prodotto;
+  quantita : number;
 }

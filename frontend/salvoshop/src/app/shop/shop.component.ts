@@ -6,6 +6,7 @@ import {Categoria} from "../models/categoria";
 import {Pagina} from "../models/pagina";
 import {Carrello} from "../models/carrello";
 import {CarrelloService} from "../servicies/carrello.service";
+import {OktaAuthService} from "@okta/okta-angular";
 
 @Component({
   selector: 'app-shop',
@@ -16,19 +17,16 @@ export class ShopComponent implements OnInit {
 
   prodotti : Prodotto[];
   prodottoRecieved: Prodotto[];
-  page : number;
-  pages : number[];
   categorie : Categoria[];
-  selVal : string;
-  category : string;
-  pagina : Pagina;
   carrello =new Carrello();
+  isAuthenticated : boolean;
 
-  constructor(private router: Router, private shopService : ShopService, private carrelloService : CarrelloService) {
+  constructor(private router: Router, private shopService : ShopService, private carrelloService : CarrelloService, public oktaAuthService : OktaAuthService) {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.isAuthenticated=await this.oktaAuthService.isAuthenticated();
     this.shopService.getProdotti().subscribe(
       prodotti => this.prodotti=prodotti
     );
@@ -37,6 +35,10 @@ export class ShopComponent implements OnInit {
     );
     this.carrelloService.getCarrello().subscribe(
       carrello => this.carrello=carrello
+    );
+    // Subscribe to authentication state changes
+    this.oktaAuthService.$authenticationState.subscribe(
+      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
     );
   }
 
@@ -48,12 +50,16 @@ export class ShopComponent implements OnInit {
   }
 
   addToCart(prodotto : Prodotto){
-    this.shopService.aggiungiProdottoCarrello(prodotto, 1).subscribe(
-      () => window.location.reload()
+    if(!this.isAuthenticated){
+      this.oktaAuthService.loginRedirect();
+    }else {
+      this.shopService.aggiungiProdottoCarrello(prodotto, 1).subscribe(
+        () => window.location.reload()
       );
-    this.shopService.getCarrello().subscribe(
-      carrello => this.carrello=carrello
-    );
+      this.shopService.getCarrello().subscribe(
+        carrello => this.carrello = carrello
+      );
+    }
   }
 
   goToCart(){

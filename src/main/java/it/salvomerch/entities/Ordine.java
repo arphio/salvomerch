@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class Ordine {
     private Integer id;
     private Date dataacquisto;
     private Double totale;
-   // private Integer cliente;
+    // private Integer cliente;
     private Cliente cliente;
     private Collection<OrdineProdotto> ordineProdottosById;
 
@@ -41,6 +42,7 @@ public class Ordine {
     public void setDataacquisto(Date dataacquisto) {
         this.dataacquisto = dataacquisto;
     }
+
 
     @Basic
     @Column(name = "totale", nullable = true, precision = 0)

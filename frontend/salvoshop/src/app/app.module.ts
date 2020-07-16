@@ -16,6 +16,9 @@ import {MatListModule} from "@angular/material/list";
 import {FooterComponent} from "./footer/footer.component";
 import { CheckoutComponent } from './checkout/checkout.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { OrdersComponent } from './orders/orders.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,20 +28,23 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CartComponent,
     HeaderComponent,
     FooterComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    OrdersComponent,
+    OrderDetailComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AuthRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AuthRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatTabsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

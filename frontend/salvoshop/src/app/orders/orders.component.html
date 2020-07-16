@@ -1,0 +1,17 @@
+<div class="container row">
+  <div class="col-md-6">
+    <ol>
+      <li *ngFor="let ordine of ordini">
+        Data Ordine: {{ordine.dataacquisto | date:'dd/MM/yyyy HH:mm'}}
+        <br>
+        Prezzo totale: €{{ordine.totale}}
+        <br>
+        <button (click)="viewOrdine(ordine.id)" >Dettagli</button>
+      </li>
+    </ol>
+  </div>
+  <div   class="col-md-6">
+    <app-order-detail *ngIf="action === 'view'" [ordine]="selOrder" [prodottiOrdinati]="selProdottiOrdinati"></app-order-detail>
+  </div>
+</div>
+
