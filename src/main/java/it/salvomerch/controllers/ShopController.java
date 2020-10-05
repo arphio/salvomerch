@@ -67,8 +67,6 @@ public class ShopController {
 
     @PostMapping("/addtocart")
     private ResponseEntity addToCart(@AuthenticationPrincipal Principal user, @RequestBody  ProdottoInCarrello prodotto){
-           // if(prodotto.getProdotto().getQuantita()<=0)throw new IllegalStateException("non disponibile!");
-           // System.out.println("prodotto in carrello is: "+prodotto.getProdotto().getNome()+","+prodotto.getQuantita());
             ProdottoInCarrello p= carrelloService.aggiungiProdotto(user, prodotto);
             return new ResponseEntity(p, HttpStatus.OK);
     }

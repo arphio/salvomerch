@@ -47,6 +47,7 @@ export class CartComponent implements OnInit {
     this.carrelloService.registerOrder().subscribe(
       () => window.location.reload()
     );
+    this.router.navigateByUrl("/orders");
   }
 
 }
